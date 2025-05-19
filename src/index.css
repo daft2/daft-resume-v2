@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @keyframes slide {
+    100% {
+      background-position: 50px 0, 125px 25px;
+    }
+  }
+
+  .darkMode {
+    @apply px-4 min-h-screen sm:px-0 space-y-16 w-full bg-dark-bg;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 2px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: 0 0, 25px 25px;
+    -webkit-animation: slide 2s linear infinite;
+    animation: slide 4s linear infinite;
+  }
+
+  .lightMode {
+    @apply px-4 min-h-screen sm:px-0 space-y-16 w-full bg-light-bg;
+    background-image: radial-gradient(rgba(0, 0, 0, 0.05) 2px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: 0 0, 25px 25px;
+    -webkit-animation: slide 4s linear infinite;
+    animation: slide 4s linear infinite;
+  }
+
+   .rpg-panel {
+    @apply rounded-md p-4 relative border dark:bg-dark-bg dark:border-neutral-800 bg-light-bg border-neutral-200 shadow-md;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+  }
+}
