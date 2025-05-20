@@ -32,10 +32,36 @@
     animation: slide 4s linear infinite;
   }
 
-   .rpg-panel {
+  .rpg-panel {
     @apply rounded-md p-4 relative border dark:bg-dark-bg dark:border-neutral-800 bg-light-bg border-neutral-200 shadow-md;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
     position: relative;
-    overflow: hidden;
   }
+
+  .shine-effect {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(30deg);
+    animation: shine 6s infinite;
+  }
+
+  @keyframes shine {
+    0% {
+      transform: translateX(-100%) rotate(30deg);
+    }
+    20%,
+    100% {
+      transform: translateX(100%) rotate(30deg);
+    }
+  }
+
 }
