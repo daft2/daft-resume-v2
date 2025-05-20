@@ -1,17 +1,17 @@
 {
-  "name": "vital",
+ "name": "daft-resume-v2",
   "type": "module",
   "version": "1.0.0",
-  "description": "Starter template for Vite with React (TypeScript). Supports Tailwind. Vitest and @react/testing-library configured and ready to go. Also ESLint, Prettier, Husky, Commit-lint and Atomic Design for components.",
-  "homepage": "https://github.com/jvidalv/vital#readme",
+  "description": "Muhammad Daffa Setyoaji's Portfolio Website Built using React, Vite, Typescript & Tailwind",
+  "homepage": "https://github.com/daft2/daft-resume-v2#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jvidalv/vital.git"
+    "url": "git+https://github.com/daft2/daft-resume-v2"
   },
-  "author": "Josep Vidal <josepvidalvidal@gmail.com>",
+  "author": "Muhammad Daffa Setyoaji <daftdevs@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jvidalv/vital/issues"
+    "url": "https://github.com/daft2/daft-resume-v2/issues"
   },
   "keywords": [
     "react",
