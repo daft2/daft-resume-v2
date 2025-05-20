@@ -1,4 +1,4 @@
-import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
+import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const ThemeButton = () => {
@@ -25,9 +25,9 @@ const ThemeButton = () => {
       className="dark:bg-light-bg bg-dark-bg dark:text-light-text-primary text-dark-text-primary absolute bottom-4 right-4 p-2 rounded-full shadow-lg transition-colors duration-300 hover:bg-opacity-80"
     >
       {theme === "dark" ? (
-        <SunIcon className="size-6" />
+        <Sun className="size-6" />
       ) : (
-        <MoonIcon className="size-6" />
+        <Moon className="size-6" />
       )}
     </button>
   );
