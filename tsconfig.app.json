@@ -24,9 +24,9 @@
     /* Paths */
     "baseUrl": "./",
     "paths": {
-      "app/*": ["src/app/*"],
-      "components/*": ["src/components/*"],
-      "hooks/*": ["src/hooks/*"]
+      "@/*": [
+        "./src/*"
+      ],
     }
   },
   "include": ["src"]

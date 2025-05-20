@@ -22,7 +22,7 @@ const ThemeButton = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="dark:bg-light-bg bg-dark-bg dark:text-light-text-primary text-dark-text-primary absolute bottom-4 right-4 p-2 rounded-full shadow-lg transition-colors duration-300 hover:bg-opacity-80"
+      className="dark:bg-light-bg bg-dark-bg dark:text-light-text-primary text-dark-text-primary fixed bottom-4 right-4 p-2 rounded-full shadow-lg transition-colors duration-300 hover:bg-opacity-80"
     >
       {theme === "dark" ? (
         <Sun className="size-6" />

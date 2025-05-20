@@ -37,7 +37,7 @@ const CharacterLevelStat = () => {
   );
 
   return (
-    <div className="rpg-panel flex flex-col justify-center items-center gap-2">
+    <div className="rpg-panel h-full flex flex-col justify-center items-center gap-2">
       <div>
         <div className="flex items-center justify-between gap-2">
           <div className="flex flex-col items-center">

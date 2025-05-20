@@ -1,5 +1,5 @@
 {
- "name": "daft-resume-v2",
+  "name": "daft-resume-v2",
   "type": "module",
   "version": "1.0.0",
   "description": "Muhammad Daffa Setyoaji's Portfolio Website Built using React, Vite, Typescript & Tailwind",
@@ -39,6 +39,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@icons-pack/react-simple-icons": "^12.8.0",
     "lucide-react": "^0.511.0",
     "react": "18.3.1",
     "react-dom": "18.3.1"
