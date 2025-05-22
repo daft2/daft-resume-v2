@@ -113,7 +113,7 @@ const CharacterSkillsStat = () => {
                 onChange={() => setShowYOE((prev) => !prev)}
               />
               <div className="w-6 h-3 xl:w-10 xl:h-5 bg-gradient-to-br from-yellow-900 via-yellow-700 to-yellow-500 border-2 border-yellow-800 rounded-full shadow-inner transition-colors duration-200 peer-checked:bg-gradient-to-br peer-checked:from-green-900 peer-checked:via-green-700 peer-checked:to-green-500 peer-checked:border-green-800" />
-              <div className="absolute left-0 top-0 w-3 h-3 xl:w-5 xl:h-5 bg-gradient-to-br from-yellow-300 via-yellow-100 to-yellow-400 border-2 border-yellow-600 peer-checked:border-green-500 peer-checked:from-green-300 peer-checked:to-green-400 peer-checked:via-green-100 rounded-full shadow peer-checked:translate-x-3 xl:peer-checked:translate-x-3 transition-transform duration-200" />
+              <div className="absolute left-0 top-0 w-3 h-3 xl:w-5 xl:h-5 bg-gradient-to-br from-yellow-300 via-yellow-100 to-yellow-400 border-2 border-yellow-600 peer-checked:border-green-500 peer-checked:from-green-300 peer-checked:to-green-400 peer-checked:via-green-100 rounded-full shadow peer-checked:translate-x-3 lg:peer-checked:translate-x-5 transition-transform duration-200" />
             </span>
           </label>
         </div>
