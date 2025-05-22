@@ -1,44 +1,29 @@
-import { useState, useRef } from "react";
-import { Diamond, Film, Filter } from "lucide-react";
-
-const slides = [
-  {
-    id: "tinkerlust",
-    title: "TINKERLUST",
-    content:
-      "Tinkerlust is a fashion marketplace app where users can buy and sell pre-loved luxury fashion items. It offers a range of designer clothes, shoes, bags, and accessories at affordable prices.",
-    icon: <Diamond className="w-5 h-5" />,
-    image:
-      "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/d2/2b/5c/d22b5ca6-3030-5922-473d-9ebc115fff33/c8f45bfa-09c7-4d20-b5d2-886b146d05c8_Artboard_3.png/626x0w.webp",
-  },
-  {
-    id: "grlpa",
-    title: "GRL@PA",
-    content:
-      "GRL@PA is the one-stop app for Grassroots Volunteers to access services, information and learning opportunities such as: Manage profile information, view current and past service records, display eID Card, stay up to date with upcoming activities and task.",
-    icon: <Film className="w-5 h-5" />,
-    image:
-      "https://play-lh.googleusercontent.com/GXm18ghBvPLp7ePQunoX4J4PPsxoXWi6MPg2FcHEla21fNlL0BnuYFTMbxVO0fgLOw=w5120-h2880-rw",
-  },
-  {
-    id: "svg-filters",
-    title: "SVG FILTERS",
-    content: "Learn how to create stunning visual effects with SVG filters.",
-    icon: <Filter className="w-5 h-5" />,
-    image: "/placeholder.svg?height=600&width=800",
-  },
-];
+import { useState, useRef, useEffect, ReactNode } from "react";
+import { getHighlighted, Portfolio } from "@/lib/appwrite";
+import {
+  SiAppstore,
+  SiGithub,
+  SiGoogleplay,
+} from "@icons-pack/react-simple-icons";
+import { SquareArrowOutUpRight } from "lucide-react";
 
 export default function CardSlideshow() {
   const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [data, setData] = useState<Portfolio[]>();
+
+  useEffect(() => {
+    getHighlighted()
+      .then(({ documents }) => setData(documents as Portfolio[]))
+      .catch((e) => console.error(e));
+  }, []);
 
   return (
     <div className="relative w-full flex overflow-hidden" ref={containerRef}>
       <div className="flex w-full gap-1 md:gap-2 flex-col lg:flex-row">
-        {slides.map((slide, index) => (
+        {data?.map((slide, index) => (
           <Slide
-            key={slide.id}
+            key={slide.$id}
             slide={slide}
             isActive={activeIndex === index}
             onClick={() => setActiveIndex(index)}
@@ -50,7 +35,7 @@ export default function CardSlideshow() {
 }
 
 interface SlideProps {
-  slide: (typeof slides)[0];
+  slide: Portfolio;
   isActive: boolean;
   onClick: () => void;
 }
@@ -62,8 +47,10 @@ function Slide({ slide, isActive, onClick }: SlideProps) {
     <div
       ref={slideRef}
       onClick={onClick}
-      className={`relative h-96 rounded-xl overflow-hidden w-full cursor-pointer border border-white/20 transition-all duration-700 ease-in-out ${
-        isActive ? "flex-1 z-50 flex-grow flex-shrink-0" : ""
+      className={`relative h-96 rounded-xl overflow-hidden w-full border border-white/20  transition-all duration-700 ease-in-out ${
+        isActive
+          ? "flex-1 z-50 flex-grow flex-shrink-0"
+          : "hover:border-white/50 cursor-pointer"
       }`}
       style={{
         transition: "all 700ms cubic-bezier(0.4, 0, 0.2, 1)",
@@ -75,14 +62,14 @@ function Slide({ slide, isActive, onClick }: SlideProps) {
           isActive ? "opacity-100" : "opacity-50"
         }`}
         style={{
-          backgroundImage: `url(${slide.image})`,
+          backgroundImage: `url(${slide.imageUrl})`,
           backgroundSize: "cover",
         }}
       />
 
       <div
         className={`absolute inset-0 transition-all duration-200 ${
-          isActive ? "bg-black/50" : "bg-black/50"
+          isActive ? "bg-black/50" : "bg-black/80"
         }`}
       />
 
@@ -91,13 +78,30 @@ function Slide({ slide, isActive, onClick }: SlideProps) {
           <div className="h-full flex flex-col justify-between p-6 opacity-0 animate-slide-content">
             <div className="flex flex-col gap-4">
               <h2 className="text-white text-2xl font-bold">{slide.title}</h2>
-              <p className="text-white/90 text-lg">{slide.content}</p>
+              <p className="text-white/90 text-lg">{slide.description}</p>
             </div>
 
-            <div className="flex flex-col gap-4">
-              <button className="flex items-center gap-2 text-white bg-transparent hover:bg-white/10 transition-colors px-3 py-2 rounded-md w-fit">
-                <span className="text-white/90">Watch now</span>
-              </button>
+            <div className="flex flex-row gap-1">
+              {slide.googleUrl && (
+                <Button href={slide.googleUrl}>
+                  <SiGoogleplay />
+                </Button>
+              )}
+              {slide.appleUrl && (
+                <Button href={slide.appleUrl}>
+                  <SiAppstore />
+                </Button>
+              )}
+              {slide.githubUrl && (
+                <Button href={slide.githubUrl}>
+                  <SiGithub />
+                </Button>
+              )}
+              {slide.liveUrl && (
+                <Button href={slide.liveUrl}>
+                  <SquareArrowOutUpRight />
+                </Button>
+              )}
             </div>
           </div>
         ) : (
@@ -115,3 +119,11 @@ function Slide({ slide, isActive, onClick }: SlideProps) {
     </div>
   );
 }
+
+const Button = ({ children, href }: { children: ReactNode; href: string }) => (
+  <button className="flex items-center gap-2 text-white bg-transparent hover:bg-white/10 transition-colors px-3 py-2 rounded-md w-fit">
+    <a target="_blank" href={href} className="text-white/90">
+      {children}
+    </a>
+  </button>
+);
