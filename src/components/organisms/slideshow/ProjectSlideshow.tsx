@@ -49,7 +49,7 @@ export default function ProjectsSlideshow() {
     <div className="rpg-panel h-full flex flex-col justify-center gap-2">
       <h1 className="text-lg font-bold">PORTFOLIO</h1>
       <div className="grid grid-cols-12 px-2">
-        <div className="col-span-full flex flex-row gap-4 py-4 overflow-x-auto">
+        <div className="col-span-full flex flex-row gap-4 py-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
           {projects.map((project) => (
             <div key={project.id} className="flex flex-col min-w-[12rem]">
               <img

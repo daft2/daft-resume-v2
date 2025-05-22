@@ -37,54 +37,40 @@ const CharacterLevelStat = () => {
   );
 
   return (
-    <div className="rpg-panel h-full flex flex-col justify-center items-center gap-2">
-      <div>
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex flex-col items-center">
-            <h2 className="text-xs">LEVEL</h2>
-            <h1 className="text-xl font-bold -m-1">{age}</h1>
-          </div>
-          <h2 className="text-md font-sans font-bold uppercase tracking-wider">
-            MUHAMMAD DAFFA SETYOAJI
-          </h2>
+    <div className="rpg-panel h-full flex flex-col">
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex flex-col items-center">
+          <h2 className="text-xs">LEVEL</h2>
+          <h1 className="text-sm xl:text-xl font-bold -m-1">{age}</h1>
         </div>
-        <div className="mt-4">
-          <div className="flex items-center justify-between mb-1">
-            <span className="text-xs font-medium">XP Obtained</span>
-            <span className="text-xs font-medium">{progress}%</span>
-          </div>
-          <div className="w-full bg-[#181c20] border border-[#23272e] rounded h-3 overflow-hidden relative shadow-inner">
-            <div
-              className="h-3 transition-all duration-700"
-              style={{
-                width: `${progress}%`,
-                background: "linear-gradient(90deg, #FFE600 0%, #bfae00 100%)",
-                boxShadow: "0 0 8px 1px #FFE60033 inset",
-                borderRight:
-                  progress === "100.00" ? "none" : "2px solid #FFE600",
-              }}
-            />
-            <div className="absolute inset-0 pointer-events-none flex">
-              {/* Tick marks for RPG style */}
-              {Array.from({ length: 10 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="h-full border-r border-[#FFE600] opacity-20"
-                  style={{ width: "10%" }}
-                />
-              ))}
-            </div>
-            <div className="absolute left-0 top-0 h-full w-full pointer-events-none">
-              {/* Subtle shine overlay */}
+        <h2 className="text-xs lg:text-base font-sans font-bold uppercase tracking-wider">
+          MUHAMMAD DAFFA SETYOAJI
+        </h2>
+      </div>
+      <div className="mt-4">
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-xs font-medium">XP Obtained</span>
+          <span className="text-xs font-medium">{progress}%</span>
+        </div>
+        <div className="w-full bg-[#181c20] border border-[#23272e] rounded overflow-hidden relative shadow-inner">
+          <div
+            className="h-1 transition-all duration-700"
+            style={{
+              width: `${progress}%`,
+              background: "linear-gradient(90deg, #FFE600 0%, #bfae00 100%)",
+              boxShadow: "0 0 8px 1px #FFE60033 inset",
+              borderRight: progress === "100.00" ? "none" : "2px solid #FFE600",
+            }}
+          />
+          <div className="absolute inset-0 pointer-events-none flex">
+            {/* Tick marks for RPG style */}
+            {Array.from({ length: 10 }).map((_, i) => (
               <div
-                style={{
-                  background:
-                    "linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(0,0,0,0.10) 100%)",
-                  height: "100%",
-                  width: "100%",
-                }}
+                key={i}
+                className="h-full border-r border-[#FFE600] opacity-20"
+                style={{ width: "10%" }}
               />
-            </div>
+            ))}
           </div>
         </div>
       </div>

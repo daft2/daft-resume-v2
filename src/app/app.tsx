@@ -1,63 +1,77 @@
+import CyberButton from "@/components/atoms/button/CyberButton";
 import ThemeButton from "@/components/atoms/button/ThemeButton";
 import SocialsCard from "@/components/organisms/card/SocialsCard";
 import CharacterLevelStat from "@/components/organisms/character-stats/CharacterLevelStat";
 import CharacterSkillsStat from "@/components/organisms/character-stats/CharacterSkillsStat";
+import CardSlideshow from "@/components/organisms/slideshow/CardSlideshow";
 import ProjectsSlideshow from "@/components/organisms/slideshow/ProjectSlideshow";
+import { ChevronRight } from "lucide-react";
 
 function App() {
   return (
-    <main className="dark:darkMode lightMode relative dark:text-dark-text-primary text-light-text-primary flex">
-      <section className="container mx-auto p-8">
-        {/* GRID PARENTS */}
-        <div className="grid grid-cols-12 gap-4 min-h-screen p-4">
-          {/* Left Section */}
-          <div className="col-span-3 grid grid-rows-12 gap-4">
-            <div className="row-span-2 bg-blue-300 rounded-lg">
-              <CharacterLevelStat />
-            </div>
-            <div className="row-span-4 bg-blue-400 rounded-lg">
-              <CharacterSkillsStat />
-            </div>
-            {/* <div className="row-span-3 bg-blue-500 rounded-lg">
-              <CharacterLevelStat />
-            </div> */}
-          </div>
+    <body>
+      <main className="relative dark:text-dark-text-primary text-light-text-primary flex">
+        <section className="container mx-auto p-8">
+          {/* GRID PARENTS */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 lg:grid-rows-12 gap-4 min-h-screen p-4">
+            {/* Left Section */}
+            <div className="lg:col-span-3 lg:row-span-5 grid gap-4">
+              <div className="lg:row-span-2 grid xl:grid-cols-3 rounded-lg gap-1">
+                <div className="xl:col-span-1 relative overflow-hidden">
+                  <img
+                    src="avatar.avif"
+                    className="w-full h-full  rounded border-2 border-black"
+                  />
+                  <div className="shine-effect" />
+                </div>
+                <div className="xl:col-span-2 rpg-panel">
+                  <div className="flex flex-row items-center w-fit">
+                    <ChevronRight />
+                    <h1 className="animate-typing text-sm overflow-hidden whitespace-nowrap border-r-4 border-r-white font-bold">
+                      Hello, World!
+                    </h1>
+                  </div>
+                </div>
+              </div>
 
-          {/* Center Section */}
-          <div className="col-span-6 grid grid-rows-12 gap-4">
-            <div className="row-span-6 grid gap-4 rounded-lg">
-              <div className="row-span-3">
+              <div className="lg:row-span-1 ">
+                <CharacterLevelStat />
+              </div>
+              <div className="lg:row-span-1">
+                <SocialsCard />
+              </div>
+
+              <div className="lg:row-span-1">
+                <CyberButton title="DOWNLOAD MY RESUME" trademark="daft" />
+              </div>
+            </div>
+
+            {/* Center Section */}
+            <div className="lg:col-span-6 lg:row-span-9 grid gap-4">
+              <div className="lg:row-span-5  flex flex-col gap-2">
+                <h1 className="text-xl font-bold">HIGHLIGHTS</h1>
+                <CardSlideshow />
+              </div>
+              <div className="lg:row-span-2">
                 <ProjectsSlideshow />
               </div>
-              <div className="row-span-3">
-                <ProjectsSlideshow />
-              </div>
             </div>
-            {/* <div className="row-span-4 bg-green-500 rounded-lg">
-              <ProjectsSlideshow />
-            </div> */}
-          </div>
 
-          {/* Right Section */}
-          <div className="col-span-3 grid grid-rows-12 gap-4">
-            <div className="row-span-1 bg-red-300 rounded-lg">
-              <SocialsCard />
-            </div>
-            <div className="row-span-1">
-              <div className="flex relative overflow-hidden rounded items-center justify-center bg-gradient- p-2">
-                <h1 className="text-xl">DOWNLOAD MY RESUME</h1>
-                <div className="shine-effect"></div>
+            {/* Right Section */}
+            <div className="lg:col-span-3 grid lg:row-span-5 gap-4">
+              <div className="lg:row-span-4 bg-blue-400 rounded-lg">
+                <CharacterSkillsStat />
               </div>
-            </div>
-            {/* <div className="row-span-5 bg-red-400 rounded-lg">Right Box 2</div>
+              {/* <div className="row-span-5 bg-red-400 rounded-lg">Right Box 2</div>
             <div className="row-span-3 bg-red-500 rounded-lg">Right Box 3</div>
             <div className="row-span-2 bg-red-600 rounded-lg">Right Box 4</div>
             <div className="row-span-2 bg-red-700 rounded-lg">Right Box 5</div> */}
+            </div>
           </div>
-        </div>
-      </section>
-      <ThemeButton />
-    </main>
+        </section>
+        <ThemeButton />
+      </main>
+    </body>
   );
 }
 
