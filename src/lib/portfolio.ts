@@ -8,6 +8,15 @@ export interface Portfolio {
   liveUrl?: string;
   imageUrl: string;
   isHighlighted?: boolean;
+  tags?: string[];
+}
+
+export interface Experience {
+  company: string;
+  role: string;
+  period: string;
+  description: string;
+  current?: boolean;
 }
 
 const portfolioItems: Portfolio[] = [
@@ -21,6 +30,7 @@ const portfolioItems: Portfolio[] = [
     googleUrl: "https://play.google.com",
     appleUrl: "https://apps.apple.com",
     isHighlighted: true,
+    tags: ["React Native", "TypeScript", "Firebase"],
   },
   {
     $id: "2",
@@ -31,6 +41,7 @@ const portfolioItems: Portfolio[] = [
     githubUrl: "https://github.com",
     liveUrl: "https://example.com",
     isHighlighted: true,
+    tags: ["Next.js", "Stripe", "PostgreSQL"],
   },
   {
     $id: "3",
@@ -41,6 +52,7 @@ const portfolioItems: Portfolio[] = [
     googleUrl: "https://play.google.com",
     appleUrl: "https://apps.apple.com",
     isHighlighted: true,
+    tags: ["Expo", "Node.js", "MongoDB"],
   },
   {
     $id: "4",
@@ -49,6 +61,7 @@ const portfolioItems: Portfolio[] = [
     githubUrl: "https://github.com",
     liveUrl: "https://example.com",
     isHighlighted: false,
+    tags: ["React", "API"],
   },
   {
     $id: "5",
@@ -56,6 +69,7 @@ const portfolioItems: Portfolio[] = [
     imageUrl: "https://placehold.co/600x400/2b2e4a/e94560?text=Task+CLI",
     githubUrl: "https://github.com",
     isHighlighted: false,
+    tags: ["Node.js", "CLI"],
   },
   {
     $id: "6",
@@ -64,6 +78,32 @@ const portfolioItems: Portfolio[] = [
     githubUrl: "https://github.com",
     liveUrl: "https://example.com",
     isHighlighted: false,
+    tags: ["React", "REST API"],
+  },
+];
+
+const experienceItems: Experience[] = [
+  {
+    company: "Tech Corp",
+    role: "Senior Software Engineer",
+    period: "2023 — Present",
+    description:
+      "Leading mobile development initiatives, architecting cross-platform solutions, and mentoring junior engineers.",
+    current: true,
+  },
+  {
+    company: "Startup Studio",
+    role: "Software Engineer",
+    period: "2021 — 2023",
+    description:
+      "Built and shipped 3 consumer-facing mobile apps from zero to production. Owned the entire frontend stack.",
+  },
+  {
+    company: "Digital Agency",
+    role: "Frontend Developer",
+    period: "2020 — 2021",
+    description:
+      "Developed responsive web applications for enterprise clients using React and TypeScript.",
   },
 ];
 
@@ -77,4 +117,8 @@ export const getPortfolio = async () => {
   return {
     documents: portfolioItems.filter((item) => !item.isHighlighted),
   };
+};
+
+export const getExperience = async () => {
+  return { documents: experienceItems };
 };

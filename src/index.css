@@ -4,35 +4,31 @@
 
 @layer base {
   :root {
-    --bg: #fafaf9;
+    --bg: #faf9f7;
     --surface: #ffffff;
-    --surface-raised: #f5f5f4;
-    --border: #e7e5e4;
-    --border-subtle: #f0eeec;
-    --text-primary: #1c1917;
-    --text-secondary: #57534e;
-    --text-tertiary: #a8a29e;
-    --accent: #0ea5e9;
-    --accent-muted: rgba(14, 165, 233, 0.15);
-    --accent-subtle: rgba(14, 165, 233, 0.06);
-    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
-    --shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.03);
+    --surface-raised: #f3f2ef;
+    --border: #e2e0dc;
+    --border-subtle: #eeece8;
+    --text-primary: #111110;
+    --text-secondary: #4a4a48;
+    --text-tertiary: #8a8986;
+    --accent: #10b981;
+    --accent-muted: rgba(16, 185, 129, 0.15);
+    --accent-subtle: rgba(16, 185, 129, 0.07);
   }
 
   [data-theme='dark'] {
-    --bg: #0c0c0e;
-    --surface: #151518;
-    --surface-raised: #1c1c21;
-    --border: #27272a;
-    --border-subtle: #1e1e22;
-    --text-primary: #fafaf9;
-    --text-secondary: #a1a1aa;
-    --text-tertiary: #52525b;
-    --accent: #38bdf8;
-    --accent-muted: rgba(56, 189, 248, 0.12);
-    --accent-subtle: rgba(56, 189, 248, 0.05);
-    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.15);
-    --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
+    --bg: #0a0a0b;
+    --surface: #131315;
+    --surface-raised: #1a1a1d;
+    --border: #232326;
+    --border-subtle: #1a1a1d;
+    --text-primary: #ededec;
+    --text-secondary: #9a9a97;
+    --text-tertiary: #5c5c59;
+    --accent: #34d399;
+    --accent-muted: rgba(52, 211, 153, 0.12);
+    --accent-subtle: rgba(52, 211, 153, 0.06);
   }
 
   html {
@@ -40,6 +36,7 @@
     -webkit-font-smoothing: antialiased;
     scrollbar-width: thin;
     scrollbar-color: var(--border) transparent;
+    scroll-behavior: smooth;
   }
 
   *,
@@ -49,34 +46,29 @@
   }
 
   body {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Sora', sans-serif;
     background-color: var(--bg);
     color: var(--text-primary);
     min-height: 100vh;
     overflow-x: hidden;
   }
 
-  /* Subtle dot grid — the one quiet nod to retro game aesthetics in the background */
-  body::before {
+  /* Noise texture grain overlay for depth and warmth */
+  body::after {
     content: '';
     position: fixed;
     inset: 0;
-    background-image: radial-gradient(circle, var(--border) 0.5px, transparent 0.5px);
-    background-size: 24px 24px;
-    opacity: 0.4;
+    opacity: 0.025;
     pointer-events: none;
-    z-index: 0;
-    mask: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+    z-index: 9999;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 128px 128px;
   }
 
-  /* Stagger delays */
-  .stagger-1 { animation-delay: 0.05s; }
-  .stagger-2 { animation-delay: 0.1s; }
-  .stagger-3 { animation-delay: 0.15s; }
-  .stagger-4 { animation-delay: 0.2s; }
-  .stagger-5 { animation-delay: 0.25s; }
-  .stagger-6 { animation-delay: 0.3s; }
-  .stagger-7 { animation-delay: 0.35s; }
+  [data-theme='dark'] body::after {
+    opacity: 0.04;
+  }
 
   /* Scrollbar */
   ::-webkit-scrollbar {
@@ -96,23 +88,16 @@
   ::-webkit-scrollbar-thumb:hover {
     background: var(--text-tertiary);
   }
+
+  /* Selection color */
+  ::selection {
+    background: var(--accent-muted);
+    color: var(--text-primary);
+  }
 }
 
 @layer components {
-  /* Clean card component */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    box-shadow: var(--shadow-card);
-    transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
-  }
-
-  .card:hover {
-    box-shadow: var(--shadow-card-hover);
-  }
-
-  /* Section label — subtle game terminology accent */
+  /* Section label — monospace uppercase with game terminology */
   .section-label {
     display: inline-flex;
     align-items: center;
@@ -128,37 +113,83 @@
   .section-label .label-dot {
     width: 6px;
     height: 6px;
-    border-radius: 2px;
+    border-radius: 50%;
     background: var(--accent);
     flex-shrink: 0;
   }
 
-  /* Tag pill */
+  /* Tag pill for tech items */
   .tag {
     display: inline-flex;
     align-items: center;
     gap: 0.375rem;
-    padding: 0.25rem 0.625rem;
-    border-radius: 6px;
+    padding: 0.3rem 0.75rem;
+    border-radius: 100px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.6875rem;
     font-weight: 400;
-    background: var(--accent-subtle);
-    color: var(--accent);
-    border: 1px solid var(--accent-muted);
-    transition: all 0.2s ease;
+    background: var(--surface-raised);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    transition: all 0.25s ease;
   }
 
   .tag:hover {
-    background: var(--accent-muted);
+    color: var(--accent);
+    border-color: var(--accent-muted);
+    background: var(--accent-subtle);
   }
 
-  /* Pixel accent — small decorative element for subtle game flavor */
-  .pixel-accent {
-    display: inline-block;
-    width: 3px;
-    height: 3px;
-    background: var(--accent);
-    flex-shrink: 0;
+  /* Reveal animation helpers */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .reveal.revealed {
+    animation: reveal-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  /* Stagger delays for orchestrated reveals */
+  .delay-1 { animation-delay: 0.08s; }
+  .delay-2 { animation-delay: 0.16s; }
+  .delay-3 { animation-delay: 0.24s; }
+  .delay-4 { animation-delay: 0.32s; }
+  .delay-5 { animation-delay: 0.40s; }
+  .delay-6 { animation-delay: 0.48s; }
+  .delay-7 { animation-delay: 0.56s; }
+  .delay-8 { animation-delay: 0.64s; }
+
+  /* Divider line */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    width: 100%;
+  }
+
+  /* Project image hover lift */
+  .project-image {
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .project-image:hover {
+    border-color: var(--accent-muted);
+    box-shadow: 0 20px 60px -12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+  }
+
+  [data-theme='dark'] .project-image:hover {
+    box-shadow: 0 20px 60px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  .project-image img {
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .project-image:hover img {
+    transform: scale(1.03);
   }
 }
