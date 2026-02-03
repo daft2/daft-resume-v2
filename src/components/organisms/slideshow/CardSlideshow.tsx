@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, ReactNode } from "react";
-import { getHighlighted, Portfolio } from "@/lib/appwrite";
+import { getHighlighted, Portfolio } from "@/lib/portfolio";
 import {
   SiAppstore,
   SiGithub,

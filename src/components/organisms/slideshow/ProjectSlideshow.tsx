@@ -1,4 +1,4 @@
-import { getPortfolio, Portfolio } from "@/lib/appwrite";
+import { getPortfolio, Portfolio } from "@/lib/portfolio";
 import { SiAppstore, SiGoogleplay } from "@icons-pack/react-simple-icons";
 import { Github, SquareArrowOutUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
