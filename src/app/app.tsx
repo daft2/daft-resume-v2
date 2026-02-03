@@ -5,74 +5,113 @@ import CharacterLevelStat from "@/components/organisms/character-stats/Character
 import CharacterSkillsStat from "@/components/organisms/character-stats/CharacterSkillsStat";
 import CardSlideshow from "@/components/organisms/slideshow/CardSlideshow";
 import ProjectsSlideshow from "@/components/organisms/slideshow/ProjectSlideshow";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Gamepad2 } from "lucide-react";
 
 function App() {
   return (
-    <main className="relative dark:text-dark-text-primary text-light-text-primary flex">
-      <section className="container mx-auto p-8">
+    <main className="relative dark:text-dark-text-primary text-light-text-primary flex min-h-screen">
+      <section className="container mx-auto p-4 md:p-6 lg:p-8 relative z-10">
+        {/* GAME TITLE BAR */}
+        <div className="flex items-center gap-3 mb-6 opacity-0 animate-float-up">
+          <Gamepad2 className="size-5 text-arcade-cyan" />
+          <h1 className="font-pixel text-[10px] md:text-xs tracking-wider text-arcade-cyan">
+            DAFFA.DEV
+          </h1>
+          <div className="flex-1 pixel-divider" />
+          <span className="font-pixel text-[8px] text-dark-text-secondary dark:text-dark-text-secondary">
+            v2.0
+          </span>
+        </div>
+
         {/* GRID PARENTS */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 lg:grid-rows-12 gap-4 min-h-screen p-4">
-          {/* Left Section */}
-          <div className="lg:col-span-3 lg:row-span-5 grid gap-4">
-            <div className="lg:row-span-2 grid xl:grid-cols-3 rounded-lg gap-1">
-              <div className="xl:col-span-1 relative overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 md:gap-4">
+          {/* Left Section — Character Info */}
+          <div className="lg:col-span-3 flex flex-col gap-3 md:gap-4">
+            {/* Avatar + Greeting */}
+            <div className="grid xl:grid-cols-3 gap-3 opacity-0 animate-float-up stagger-1">
+              <div className="xl:col-span-1 relative overflow-hidden rounded-sm border-2 border-arcade-cyan/30 dark:border-arcade-cyan/30 shadow-glow-cyan">
                 <img
                   src="avatar.avif"
-                  className="w-full h-full  rounded border-2 border-black"
+                  className="w-full h-full object-cover"
+                  alt="Avatar"
                 />
                 <div className="shine-effect" />
+                {/* Corner decorations */}
+                <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-arcade-cyan" />
+                <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-arcade-cyan" />
+                <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-arcade-cyan" />
+                <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-arcade-cyan" />
               </div>
-              <div className="xl:col-span-2 rpg-panel">
-                <div className="flex flex-row items-center w-fit">
-                  <ChevronRight />
-                  <h1 className="animate-typing text-sm overflow-hidden whitespace-nowrap border-r-4 border-r-white font-bold">
+              <div className="xl:col-span-2 rpg-panel flex items-center">
+                <div className="flex flex-row items-center gap-2">
+                  <ChevronRight className="size-4 text-arcade-cyan animate-pixel-pulse" />
+                  <h1 className="animate-typing text-xs font-mono overflow-hidden whitespace-nowrap border-r-2 border-r-arcade-cyan font-medium tracking-wide">
                     Hello, World!
                   </h1>
                 </div>
               </div>
             </div>
 
-            <div className="lg:row-span-1 ">
+            {/* Character Level */}
+            <div className="opacity-0 animate-float-up stagger-2">
               <CharacterLevelStat />
             </div>
-            <div className="lg:row-span-1">
+
+            {/* Socials */}
+            <div className="opacity-0 animate-float-up stagger-3">
               <SocialsCard />
             </div>
 
-            <div className="lg:row-span-1">
+            {/* Resume Download */}
+            <div className="opacity-0 animate-float-up stagger-4">
               <a
                 href="https://drive.google.com/file/d/1SDemXlTIQkUY5bIe1vvqzO8aCo4nzdZ-/view"
                 target="_blank"
               >
-                <CyberButton title="DOWNLOAD MY RESUME" trademark="daft" />
+                <CyberButton title="DOWNLOAD RESUME" trademark="daft" />
               </a>
             </div>
           </div>
 
-          {/* Center Section */}
-          <div className="lg:col-span-6 lg:row-span-9 grid gap-4">
-            <div className="lg:row-span-5  flex flex-col gap-2">
-              <h1 className="text-xl font-bold">HIGHLIGHTS</h1>
+          {/* Center Section — Quest Log / Highlights */}
+          <div className="lg:col-span-6 flex flex-col gap-3 md:gap-4">
+            {/* Highlights */}
+            <div className="flex flex-col gap-2 opacity-0 animate-float-up stagger-2">
+              <div className="rpg-header mb-2">
+                <span className="font-pixel text-[10px] md:text-xs text-arcade-cyan tracking-wider">
+                  QUEST LOG
+                </span>
+                <span className="font-mono text-[10px] text-dark-text-secondary">
+                  // highlighted projects
+                </span>
+              </div>
               <CardSlideshow />
             </div>
-            <div className="lg:row-span-2">
+
+            {/* Portfolio */}
+            <div className="opacity-0 animate-float-up stagger-4">
               <ProjectsSlideshow />
             </div>
           </div>
 
-          {/* Right Section */}
-          <div className="lg:col-span-3 grid lg:row-span-5 gap-4">
-            <div className="lg:row-span-4 bg-blue-400 rounded-lg">
+          {/* Right Section — Skills / Stats */}
+          <div className="lg:col-span-3 flex flex-col gap-3 md:gap-4">
+            <div className="opacity-0 animate-float-up stagger-3">
               <CharacterSkillsStat />
             </div>
-            {/* <div className="row-span-5 bg-red-400 rounded-lg">Right Box 2</div>
-            <div className="row-span-3 bg-red-500 rounded-lg">Right Box 3</div>
-            <div className="row-span-2 bg-red-600 rounded-lg">Right Box 4</div>
-            <div className="row-span-2 bg-red-700 rounded-lg">Right Box 5</div> */}
           </div>
         </div>
+
+        {/* FOOTER BAR */}
+        <div className="flex items-center gap-3 mt-6 opacity-0 animate-float-up stagger-6">
+          <div className="flex-1 pixel-divider" />
+          <span className="font-pixel text-[7px] text-dark-text-secondary tracking-wider">
+            PRESS START TO CONTINUE
+          </span>
+          <div className="flex-1 pixel-divider" />
+        </div>
       </section>
+
       <ThemeButton />
     </main>
   );

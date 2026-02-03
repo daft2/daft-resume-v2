@@ -29,12 +29,17 @@ const ThemeButton = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="dark:bg-light-bg bg-dark-bg dark:text-light-text-primary text-dark-text-primary fixed bottom-4 right-4 p-2 rounded-full shadow-lg transition-colors duration-300 hover:bg-opacity-80"
+      className="fixed bottom-4 right-4 p-2.5 rounded-sm border-2 transition-all duration-300 z-50
+        dark:bg-dark-surface bg-light-surface
+        dark:border-arcade-cyan/30 border-light-border
+        dark:text-arcade-cyan text-light-text-primary
+        hover:shadow-glow-cyan dark:hover:border-arcade-cyan/60
+        hover:scale-105 active:scale-95"
     >
       {theme === "dark" ? (
-        <Sun className="size-6" />
+        <Sun className="size-5" />
       ) : (
-        <Moon className="size-6" />
+        <Moon className="size-5" />
       )}
     </button>
   );

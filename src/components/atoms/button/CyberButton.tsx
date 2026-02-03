@@ -6,10 +6,10 @@ const CyberButton = ({
   trademark?: string;
 }) => {
   return (
-    <button className="cybr-btn p-4 w-full h-full text-xs xl:text-lg font-bold">
+    <button className="cybr-btn p-4 w-full h-full text-[8px] xl:text-xs font-pixel tracking-wider">
       {title}
       <span aria-hidden>_</span>
-      <span aria-hidden className="cybr-btn__glitch">
+      <span aria-hidden className="cybr-btn__glitch font-pixel">
         {title}_
       </span>
       <span aria-hidden className="cybr-btn__tag">
