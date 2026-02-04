@@ -7,7 +7,7 @@ import {
   Portfolio,
   Experience,
 } from "@/lib/portfolio";
-import { useReveal } from "@/lib/useReveal";
+
 import { SiGithub, SiGoogleplay, SiAppstore } from "@icons-pack/react-simple-icons";
 import {
   ExternalLink,
@@ -38,13 +38,7 @@ function App() {
   const [projects, setProjects] = useState<Portfolio[]>([]);
   const [experience, setExperience] = useState<Experience[]>([]);
 
-  const heroRef = useReveal();
-  const projectsRef = useReveal();
-  const bentoRef = useReveal();
-  const otherRef = useReveal();
-  const footerRef = useReveal();
-
-  useEffect(() => {
+useEffect(() => {
     getHighlighted().then(({ documents }) => setHighlighted(documents as Portfolio[]));
     getPortfolio().then(({ documents }) => setProjects(documents as Portfolio[]));
     getExperience().then(({ documents }) => setExperience(documents));
@@ -68,24 +62,24 @@ function App() {
       </nav>
 
       {/* ─── HERO ─── */}
-      <section ref={heroRef} className="pt-32 md:pt-44 pb-20 md:pb-32 px-6 md:px-10 max-w-[1200px] mx-auto">
-        <div className="reveal delay-1">
+      <section className="pt-32 md:pt-44 pb-20 md:pb-32 px-6 md:px-10 max-w-[1200px] mx-auto">
+        <div>
           <p className="section-label mb-6">
             <span className="label-dot" />
             available for work
           </p>
         </div>
-        <h1 className="reveal delay-2 text-display-xl font-sans max-w-[900px]">
+        <h1 className="text-display-xl font-sans max-w-[900px]">
           Muhammad Daffa{" "}
           <span className="text-text-tertiary">builds products</span>{" "}
           <span className="font-serif italic font-light text-text-secondary">people actually use</span>
         </h1>
-        <div className="reveal delay-3 mt-8 md:mt-10">
+        <div className="mt-8 md:mt-10">
           <p className="text-body-lg text-text-secondary max-w-[520px]">
             Software engineer focused on mobile & web. Turning complex problems into clean, intuitive experiences.
           </p>
         </div>
-        <div className="reveal delay-4 mt-8 flex flex-wrap items-center gap-3">
+        <div className="mt-8 flex flex-wrap items-center gap-3">
           <a
             href="mailto:daftdevs@gmail.com"
             className="inline-flex items-center gap-2.5 px-5 py-2.5 bg-text-primary text-bg rounded-full text-caption font-medium hover:opacity-85 active:scale-[0.97] transition-all duration-200"
@@ -106,22 +100,20 @@ function App() {
       </section>
 
       {/* ─── FEATURED PROJECTS ─── */}
-      <section id="work" ref={projectsRef} className="pb-24 md:pb-36 px-6 md:px-10 max-w-[1200px] mx-auto">
-        <div className="reveal">
-          <div className="flex items-center justify-between mb-12 md:mb-16">
-            <div className="section-label">
-              <span className="label-dot" />
-              quest log
-            </div>
-            <span className="text-micro text-text-tertiary font-mono uppercase">
-              {highlighted.length} featured
-            </span>
+      <section id="work" className="pb-24 md:pb-36 px-6 md:px-10 max-w-[1200px] mx-auto">
+        <div className="flex items-center justify-between mb-12 md:mb-16">
+          <div className="section-label">
+            <span className="label-dot" />
+            quest log
           </div>
+          <span className="text-micro text-text-tertiary font-mono uppercase">
+            {highlighted.length} featured
+          </span>
         </div>
 
         <div className="flex flex-col gap-20 md:gap-28">
           {highlighted.map((project, i) => (
-            <div key={project.$id} className="reveal" style={{ animationDelay: `${i * 0.12}s` }}>
+            <div key={project.$id}>
               <FeaturedProject project={project} index={i} />
             </div>
           ))}
@@ -129,17 +121,15 @@ function App() {
       </section>
 
       {/* ─── BENTO GRID — About / Experience / Stack / Personality ─── */}
-      <section id="about" ref={bentoRef} className="pb-24 md:pb-36 px-6 md:px-10 max-w-[1200px] mx-auto">
-        <div className="reveal">
-          <div className="section-label mb-12 md:mb-16">
-            <span className="label-dot" />
-            character sheet
-          </div>
+      <section id="about" className="pb-24 md:pb-36 px-6 md:px-10 max-w-[1200px] mx-auto">
+        <div className="section-label mb-12 md:mb-16">
+          <span className="label-dot" />
+          character sheet
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4">
           {/* Profile — spans 5 cols */}
-          <div className="reveal delay-1 lg:col-span-5 p-6 md:p-8 rounded-2xl border border-border bg-surface">
+          <div className="lg:col-span-5 p-6 md:p-8 rounded-2xl border border-border bg-surface">
             <div className="flex items-start gap-5 mb-6">
               <div className="w-14 h-14 rounded-2xl overflow-hidden flex-shrink-0 ring-1 ring-border">
                 <img
@@ -181,7 +171,7 @@ function App() {
           </div>
 
           {/* Tech Loadout — spans 7 cols */}
-          <div className="reveal delay-2 lg:col-span-7 p-6 md:p-8 rounded-2xl border border-border bg-surface">
+          <div className="lg:col-span-7 p-6 md:p-8 rounded-2xl border border-border bg-surface">
             <div className="section-label mb-6">
               <span className="label-dot" />
               loadout
@@ -190,7 +180,7 @@ function App() {
           </div>
 
           {/* Experience timeline — spans 7 cols */}
-          <div className="reveal delay-3 lg:col-span-7 p-6 md:p-8 rounded-2xl border border-border bg-surface">
+          <div className="lg:col-span-7 p-6 md:p-8 rounded-2xl border border-border bg-surface">
             <div className="section-label mb-6">
               <span className="label-dot" />
               party history
@@ -203,7 +193,7 @@ function App() {
           </div>
 
           {/* Personality tiles — spans 5 cols, split into sub-grid */}
-          <div className="reveal delay-4 lg:col-span-5 grid grid-cols-2 gap-4">
+          <div className="lg:col-span-5 grid grid-cols-2 gap-4">
             {/* Hobbies tile */}
             <div className="col-span-2 p-6 rounded-2xl border border-border bg-surface">
               <span className="text-micro text-text-tertiary font-mono uppercase block mb-4">Off-screen</span>
@@ -239,16 +229,14 @@ function App() {
       </section>
 
       {/* ─── SIDE QUESTS ─── */}
-      <section ref={otherRef} className="pb-24 md:pb-36 px-6 md:px-10 max-w-[1200px] mx-auto">
-        <div className="reveal">
-          <div className="section-label mb-10 md:mb-12">
-            <span className="label-dot" />
-            side quests
-          </div>
+      <section className="pb-24 md:pb-36 px-6 md:px-10 max-w-[1200px] mx-auto">
+        <div className="section-label mb-10 md:mb-12">
+          <span className="label-dot" />
+          side quests
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {projects.map((project, i) => (
-            <div key={project.$id} className="reveal" style={{ animationDelay: `${i * 0.08}s` }}>
+          {projects.map((project) => (
+            <div key={project.$id}>
               <SmallProjectCard project={project} />
             </div>
           ))}
@@ -257,7 +245,7 @@ function App() {
 
       {/* ─── CONTACT CTA ─── */}
       <section className="pb-24 md:pb-36 px-6 md:px-10 max-w-[1200px] mx-auto text-center">
-        <div className="reveal">
+        <div>
           <h2 className="text-display font-sans mb-4">
             Let's work together
           </h2>
@@ -275,8 +263,8 @@ function App() {
       </section>
 
       {/* ─── FOOTER ─── */}
-      <footer ref={footerRef} className="border-t border-border px-6 md:px-10">
-        <div className="reveal max-w-[1200px] mx-auto py-8 flex items-center justify-between">
+      <footer className="border-t border-border px-6 md:px-10">
+        <div className="max-w-[1200px] mx-auto py-8 flex items-center justify-between">
           <span className="text-micro text-text-tertiary font-mono uppercase">
             &copy; {new Date().getFullYear()} daffa.dev
           </span>

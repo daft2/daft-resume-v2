@@ -140,25 +140,6 @@
     background: var(--accent-subtle);
   }
 
-  /* Reveal animation helpers */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  .reveal.revealed {
-    animation: reveal-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  }
-
-  /* Stagger delays for orchestrated reveals */
-  .delay-1 { animation-delay: 0.08s; }
-  .delay-2 { animation-delay: 0.16s; }
-  .delay-3 { animation-delay: 0.24s; }
-  .delay-4 { animation-delay: 0.32s; }
-  .delay-5 { animation-delay: 0.40s; }
-  .delay-6 { animation-delay: 0.48s; }
-  .delay-7 { animation-delay: 0.56s; }
-  .delay-8 { animation-delay: 0.64s; }
 
   /* Divider line */
   .divider {
