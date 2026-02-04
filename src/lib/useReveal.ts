@@ -19,10 +19,21 @@ export function useReveal() {
       { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
     );
 
-    const children = el.querySelectorAll(".reveal");
-    children.forEach((child) => observer.observe(child));
+    // Use MutationObserver to detect dynamically added .reveal elements
+    const observeAll = () => {
+      const children = el.querySelectorAll(".reveal:not(.revealed)");
+      children.forEach((child) => observer.observe(child));
+    };
 
-    return () => observer.disconnect();
+    observeAll();
+
+    const mutation = new MutationObserver(observeAll);
+    mutation.observe(el, { childList: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+      mutation.disconnect();
+    };
   }, []);
 
   return ref;
