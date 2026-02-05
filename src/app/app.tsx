@@ -136,7 +136,7 @@ function App() {
         <div className="max-w-[1200px] mx-auto px-6 md:px-10">
           <div className="h-[72px] flex items-center justify-between">
             {/* ── Left: Logo/Name ── */}
-            <a href="#" className="group flex items-center gap-2.5">
+            <a href="#" aria-label="Home" className="group flex items-center gap-2.5">
               <span className="text-[15px] font-semibold tracking-[-0.02em] text-text-primary">
                 daftdevs
               </span>
