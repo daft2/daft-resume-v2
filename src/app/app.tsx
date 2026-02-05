@@ -294,9 +294,9 @@ function App() {
           character sheet
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 md:gap-4">
           {/* Profile — spans 5 cols (prominent) */}
-          <div className="lg:col-span-5 p-6 md:p-8 rounded-2xl border border-border bg-surface card-prominent">
+          <div className="lg:col-span-5 p-5 rounded-2xl border border-border bg-surface card-prominent">
             <div className="flex items-start gap-5 mb-6">
               <div className="w-14 h-14 rounded-2xl overflow-hidden flex-shrink-0 ring-1 ring-border">
                 <img
@@ -337,9 +337,9 @@ function App() {
             </div>
           </div>
 
-          {/* Tech Loadout — spans 7 cols */}
-          <div className="lg:col-span-7 p-6 md:p-8 rounded-2xl border border-border bg-surface">
-            <div className="section-label mb-6">
+          {/* Tech Loadout — spans 7 cols (inverted) */}
+          <div className="lg:col-span-7 p-5 rounded-2xl bg-[#141414] dark:bg-surface border border-[#252525] dark:border-border card-inverted">
+            <div className="section-label mb-5 text-[#808080] dark:text-text-tertiary">
               <span className="label-dot" />
               loadout
             </div>
@@ -347,8 +347,8 @@ function App() {
           </div>
 
           {/* Experience timeline — spans 7 cols */}
-          <div className="lg:col-span-7 p-6 md:p-8 rounded-2xl border border-border bg-surface">
-            <div className="section-label mb-6">
+          <div className="lg:col-span-7 p-5 rounded-2xl border border-border bg-surface">
+            <div className="section-label mb-5">
               <span className="label-dot" />
               party history
             </div>
@@ -360,9 +360,9 @@ function App() {
           </div>
 
           {/* Personality tiles — spans 5 cols, split into sub-grid */}
-          <div className="lg:col-span-5 grid grid-cols-2 gap-4">
+          <div className="lg:col-span-5 grid grid-cols-2 gap-3 md:gap-4">
             {/* Hobbies tile */}
-            <div className="col-span-2 p-6 rounded-2xl border border-border bg-surface">
+            <div className="col-span-2 p-5 rounded-2xl border border-border bg-surface">
               <span className="text-micro text-text-tertiary font-mono uppercase block mb-4">Off-screen</span>
               <div className="flex flex-wrap gap-3">
                 {[

@@ -473,6 +473,33 @@
     );
   }
 
+  /* Inverted card (dark in light mode) */
+  .card-inverted .tag {
+    background: #252525;
+    border-color: #333;
+    color: #a0a0a0;
+  }
+
+  .card-inverted .tag:hover {
+    color: var(--accent);
+    border-color: var(--accent-muted);
+    background: rgba(52, 211, 153, 0.1);
+  }
+
+  .card-inverted .text-micro {
+    color: #666;
+  }
+
+  [data-theme='dark'] .card-inverted .tag {
+    background: var(--surface-raised);
+    border-color: var(--border);
+    color: var(--text-secondary);
+  }
+
+  [data-theme='dark'] .card-inverted .text-micro {
+    color: var(--text-tertiary);
+  }
+
   /* ── AI Terminal ── */
   .terminal-window {
     box-shadow:
