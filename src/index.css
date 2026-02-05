@@ -473,33 +473,7 @@
     );
   }
 
-  /* Inverted card (dark in light mode) */
-  .card-inverted .tag {
-    background: #252525;
-    border-color: #333;
-    color: #a0a0a0;
-  }
-
-  .card-inverted .tag:hover {
-    color: var(--accent);
-    border-color: var(--accent-muted);
-    background: rgba(52, 211, 153, 0.1);
-  }
-
-  .card-inverted .text-micro {
-    color: #666;
-  }
-
-  [data-theme='dark'] .card-inverted .tag {
-    background: var(--surface-raised);
-    border-color: var(--border);
-    color: var(--text-secondary);
-  }
-
-  [data-theme='dark'] .card-inverted .text-micro {
-    color: var(--text-tertiary);
-  }
-
+  
   /* ── AI Terminal ── */
   .terminal-window {
     box-shadow:
@@ -557,5 +531,81 @@
 
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
+  }
+
+  /* ── Scroll Reveal Animations ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stagger delays for children */
+  .reveal-stagger > .reveal:nth-child(1) { transition-delay: 0ms; }
+  .reveal-stagger > .reveal:nth-child(2) { transition-delay: 80ms; }
+  .reveal-stagger > .reveal:nth-child(3) { transition-delay: 160ms; }
+  .reveal-stagger > .reveal:nth-child(4) { transition-delay: 240ms; }
+  .reveal-stagger > .reveal:nth-child(5) { transition-delay: 320ms; }
+  .reveal-stagger > .reveal:nth-child(6) { transition-delay: 400ms; }
+
+  /* ── Hero Entrance Animations ── */
+  .hero-enter {
+    opacity: 0;
+    transform: translateY(40px);
+    animation: heroEnter 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .hero-enter-1 { animation-delay: 0.1s; }
+  .hero-enter-2 { animation-delay: 0.2s; }
+  .hero-enter-3 { animation-delay: 0.35s; }
+  .hero-enter-4 { animation-delay: 0.5s; }
+
+  @keyframes heroEnter {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Hero title word animation */
+  .hero-word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(100%);
+    animation: heroWordReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes heroWordReveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Line reveal for hero */
+  .hero-line {
+    overflow: hidden;
+  }
+
+  .hero-line-inner {
+    display: block;
+    transform: translateY(105%);
+    animation: lineReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .hero-line-inner.delay-1 { animation-delay: 0.15s; }
+  .hero-line-inner.delay-2 { animation-delay: 0.25s; }
+  .hero-line-inner.delay-3 { animation-delay: 0.35s; }
+
+  @keyframes lineReveal {
+    to {
+      transform: translateY(0);
+    }
   }
 }

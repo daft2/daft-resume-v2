@@ -9,6 +9,7 @@ import {
 } from "@/lib/portfolio";
 import { getLenis } from "@/lib/useLenis";
 import { AITerminal, AITerminalTrigger } from "@/components/organisms/ai-terminal";
+import { initScrollReveal } from "@/lib/useScrollReveal";
 
 import { SiGithub, SiGoogleplay, SiAppstore } from "@icons-pack/react-simple-icons";
 import {
@@ -54,6 +55,14 @@ function App() {
     getPortfolio().then(({ documents }) => setProjects(documents as Portfolio[]));
     getExperience().then(({ documents }) => setExperience(documents));
   }, []);
+
+  // Initialize scroll reveal animations
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      initScrollReveal();
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [highlighted, projects, experience]);
 
   // Scroll spy for active section + scroll state
   useEffect(() => {
@@ -229,24 +238,39 @@ function App() {
       </nav>
 
       {/* ─── HERO ─── */}
-      <section className="pt-32 md:pt-44 pb-20 md:pb-32 px-6 md:px-10 max-w-[1200px] mx-auto">
-        <div>
-          <p className="section-label mb-6">
+      <section className="pt-32 md:pt-48 pb-24 md:pb-36 px-6 md:px-10 max-w-[1200px] mx-auto">
+        <div className="hero-enter hero-enter-1">
+          <p className="section-label mb-8">
             <span className="label-dot" />
             available for work
           </p>
         </div>
-        <h1 className="text-display-xl font-sans max-w-[900px]">
-          Muhammad Daffa{" "}
-          <span className="text-text-tertiary">builds products</span>{" "}
-          <span className="font-serif italic font-light text-text-secondary">people actually use</span>
+
+        <h1 className="max-w-[1000px] mb-8 md:mb-10">
+          <span className="hero-line block">
+            <span className="hero-line-inner text-[clamp(2.75rem,10vw,7rem)] font-semibold leading-[0.95] tracking-[-0.03em]">
+              Muhammad Daffa
+            </span>
+          </span>
+          <span className="hero-line block">
+            <span className="hero-line-inner delay-1 text-[clamp(2.75rem,10vw,7rem)] font-semibold leading-[0.95] tracking-[-0.03em] text-text-tertiary">
+              builds products
+            </span>
+          </span>
+          <span className="hero-line block">
+            <span className="hero-line-inner delay-2 text-[clamp(2.75rem,10vw,7rem)] font-serif italic font-light leading-[1] tracking-[-0.02em] text-text-secondary">
+              people actually use
+            </span>
+          </span>
         </h1>
-        <div className="mt-8 md:mt-10">
-          <p className="text-body-lg text-text-secondary max-w-[520px]">
+
+        <div className="hero-enter hero-enter-3 max-w-[520px]">
+          <p className="text-body-lg text-text-secondary">
             Software engineer focused on mobile & web. Turning complex problems into clean, intuitive experiences.
           </p>
         </div>
-        <div className="mt-8 flex flex-wrap items-center gap-3">
+
+        <div className="hero-enter hero-enter-4 mt-10 flex flex-wrap items-center gap-3">
           <a
             href="mailto:daftdevs@gmail.com"
             className="btn-primary"
@@ -268,7 +292,7 @@ function App() {
 
       {/* ─── FEATURED PROJECTS ─── */}
       <section id="work" className="pb-24 md:pb-36 px-6 md:px-10 max-w-[1200px] mx-auto">
-        <div className="flex items-center justify-between mb-12 md:mb-16">
+        <div className="flex items-center justify-between mb-12 md:mb-16 reveal">
           <div className="section-label">
             <span className="label-dot" />
             quest log
@@ -280,7 +304,7 @@ function App() {
 
         <div className="flex flex-col gap-20 md:gap-28">
           {highlighted.map((project, i) => (
-            <div key={project.$id}>
+            <div key={project.$id} className="reveal">
               <FeaturedProject project={project} index={i} />
             </div>
           ))}
@@ -289,14 +313,14 @@ function App() {
 
       {/* ─── BENTO GRID — About / Experience / Stack / Personality ─── */}
       <section id="about" className="pb-24 md:pb-36 px-6 md:px-10 max-w-[1200px] mx-auto">
-        <div className="section-label mb-12 md:mb-16">
+        <div className="section-label mb-12 md:mb-16 reveal">
           <span className="label-dot" />
           character sheet
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 md:gap-4">
           {/* Profile — spans 5 cols (prominent) */}
-          <div className="lg:col-span-5 p-5 rounded-2xl border border-border bg-surface card-prominent">
+          <div className="lg:col-span-5 p-5 rounded-2xl border border-border bg-surface card-prominent reveal">
             <div className="flex items-start gap-5 mb-6">
               <div className="w-14 h-14 rounded-2xl overflow-hidden flex-shrink-0 ring-1 ring-border">
                 <img
@@ -337,9 +361,9 @@ function App() {
             </div>
           </div>
 
-          {/* Tech Loadout — spans 7 cols (inverted) */}
-          <div className="lg:col-span-7 p-5 rounded-2xl bg-[#141414] dark:bg-surface border border-[#252525] dark:border-border card-inverted">
-            <div className="section-label mb-5 text-[#808080] dark:text-text-tertiary">
+          {/* Tech Loadout — spans 7 cols */}
+          <div className="lg:col-span-7 p-5 rounded-2xl border border-border bg-surface reveal">
+            <div className="section-label mb-5">
               <span className="label-dot" />
               loadout
             </div>
@@ -347,7 +371,7 @@ function App() {
           </div>
 
           {/* Experience timeline — spans 7 cols */}
-          <div className="lg:col-span-7 p-5 rounded-2xl border border-border bg-surface">
+          <div className="lg:col-span-7 p-5 rounded-2xl border border-border bg-surface reveal">
             <div className="section-label mb-5">
               <span className="label-dot" />
               party history
@@ -362,7 +386,7 @@ function App() {
           {/* Personality tiles — spans 5 cols, split into sub-grid */}
           <div className="lg:col-span-5 grid grid-cols-2 gap-3 md:gap-4">
             {/* Hobbies tile */}
-            <div className="col-span-2 p-5 rounded-2xl border border-border bg-surface">
+            <div className="col-span-2 p-5 rounded-2xl border border-border bg-surface reveal">
               <span className="text-micro text-text-tertiary font-mono uppercase block mb-4">Off-screen</span>
               <div className="flex flex-wrap gap-3">
                 {[
@@ -381,7 +405,7 @@ function App() {
             </div>
 
             {/* YOE tile - prominent */}
-            <div className="p-5 rounded-2xl bg-accent/10 border border-accent/20 flex flex-col">
+            <div className="p-5 rounded-2xl bg-accent/10 border border-accent/10 dark:border-accent/15 flex flex-col reveal">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-micro text-accent font-mono uppercase tracking-wider">Level</span>
                 <Zap className="size-4 text-accent" />
@@ -395,7 +419,7 @@ function App() {
             </div>
 
             {/* Projects count tile */}
-            <div className="p-5 rounded-2xl border border-border bg-surface flex flex-col">
+            <div className="p-5 rounded-2xl border border-border bg-surface flex flex-col reveal">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-micro text-text-tertiary font-mono uppercase tracking-wider">Shipped</span>
                 <FolderCode className="size-4 text-text-tertiary" />
@@ -409,13 +433,13 @@ function App() {
 
       {/* ─── SIDE QUESTS ─── */}
       <section className="pb-24 md:pb-36 px-6 md:px-10 max-w-[1200px] mx-auto">
-        <div className="section-label mb-10 md:mb-12">
+        <div className="section-label mb-10 md:mb-12 reveal">
           <span className="label-dot" />
           side quests
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {projects.map((project) => (
-            <div key={project.$id}>
+            <div key={project.$id} className="reveal">
               <SmallProjectCard project={project} />
             </div>
           ))}
@@ -424,7 +448,7 @@ function App() {
 
       {/* ─── CONTACT CTA ─── */}
       <section className="pb-24 md:pb-36 px-6 md:px-10 max-w-[1200px] mx-auto text-center">
-        <div>
+        <div className="reveal">
           <h2 className="text-display font-sans mb-4">
             Let's work together
           </h2>
