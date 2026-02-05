@@ -74,6 +74,24 @@
     overflow-x: hidden;
   }
 
+  /* Dot grid background like Raycast */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, var(--text-tertiary) 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: -1;
+    mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+  }
+
+  [data-theme='dark'] body::before {
+    opacity: 0.2;
+  }
+
   /* Noise texture grain overlay for depth and warmth */
   body::after {
     content: '';
