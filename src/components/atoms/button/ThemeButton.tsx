@@ -30,13 +30,13 @@ const ThemeButton = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="group relative flex items-center justify-center w-9 h-9 rounded-full border border-border text-text-tertiary hover:text-text-primary hover:border-text-tertiary transition-all duration-300"
+      className="btn-icon-circle btn-theme"
       aria-label="Toggle theme"
     >
       {theme === "dark" ? (
-        <Sun className="size-[15px]" />
+        <Sun className="size-[15px] theme-icon" />
       ) : (
-        <Moon className="size-[15px]" />
+        <Moon className="size-[15px] theme-icon" />
       )}
     </button>
   );

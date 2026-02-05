@@ -218,18 +218,18 @@ function App() {
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <a
             href="mailto:daftdevs@gmail.com"
-            className="inline-flex items-center gap-2.5 px-5 py-2.5 bg-text-primary text-bg rounded-full text-caption font-medium hover:opacity-85 active:scale-[0.97] transition-all duration-200"
+            className="btn-primary"
           >
             Get in touch
-            <ArrowUpRight className="size-3.5" />
+            <ArrowUpRight className="size-3.5 btn-icon" />
           </a>
           <a
             href="https://drive.google.com/file/d/1SDemXlTIQkUY5bIe1vvqzO8aCo4nzdZ-/view"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-border text-caption font-medium text-text-secondary hover:text-text-primary hover:border-text-tertiary transition-all duration-200"
+            className="btn-secondary"
           >
-            <Download className="size-3.5" />
+            <Download className="size-3.5 btn-icon" />
             Resume
           </a>
         </div>
@@ -298,7 +298,7 @@ function App() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="flex items-center justify-center w-9 h-9 rounded-full border border-border text-text-tertiary hover:text-text-primary hover:border-text-tertiary transition-all duration-300"
+                  className="btn-icon-circle"
                 >
                   <Icon className="size-[15px]" />
                 </a>
@@ -390,10 +390,10 @@ function App() {
           </p>
           <a
             href="mailto:daftdevs@gmail.com"
-            className="inline-flex items-center gap-2.5 px-6 py-3 bg-text-primary text-bg rounded-full text-caption font-medium hover:opacity-85 active:scale-[0.97] transition-all duration-200"
+            className="btn-primary"
           >
             Say hello
-            <ArrowUpRight className="size-3.5" />
+            <ArrowUpRight className="size-3.5 btn-icon" />
           </a>
         </div>
       </section>
@@ -496,7 +496,7 @@ function ProjectLink({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-border text-caption text-text-secondary hover:text-text-primary hover:border-text-tertiary transition-all duration-300"
+      className="btn-ghost"
     >
       {children}
     </a>
@@ -532,17 +532,29 @@ function ExperienceRow({ exp, isLast }: { exp: Experience; isLast: boolean }) {
    ────────────────────────────────────────────── */
 function SmallProjectCard({ project }: { project: Portfolio }) {
   return (
-    <div className="group p-5 rounded-2xl border border-border bg-surface hover:border-text-tertiary/30 transition-all duration-300">
+    <div className="group p-5 rounded-2xl border border-border bg-surface hover:border-text-tertiary/30 hover:bg-surface-raised/50 transition-all duration-300">
       <div className="flex items-start justify-between mb-3">
-        <h3 className="text-body font-medium tracking-tight">{project.title}</h3>
-        <div className="flex items-center gap-1">
+        <h3 className="text-body font-medium tracking-tight group-hover:text-text-primary transition-colors">{project.title}</h3>
+        <div className="flex items-center gap-0.5">
           {project.githubUrl && (
-            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-text-tertiary hover:text-text-primary transition-colors p-1">
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              className="flex items-center justify-center w-7 h-7 rounded-md text-text-tertiary hover:text-text-primary hover:bg-surface-raised transition-all duration-200 active:scale-90"
+            >
               <Github className="size-[14px]" />
             </a>
           )}
           {project.liveUrl && (
-            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" aria-label="Live" className="text-text-tertiary hover:text-text-primary transition-colors p-1">
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Live"
+              className="flex items-center justify-center w-7 h-7 rounded-md text-text-tertiary hover:text-text-primary hover:bg-surface-raised transition-all duration-200 active:scale-90"
+            >
               <ExternalLink className="size-[14px]" />
             </a>
           )}
