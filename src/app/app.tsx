@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import ThemeButton from "@/components/atoms/button/ThemeButton";
 import {
   getHighlighted,
@@ -18,6 +18,8 @@ import {
   Gamepad2,
   Coffee,
   Headphones,
+  Menu,
+  X,
 } from "lucide-react";
 import { Github, Linkedin } from "lucide-react";
 import {
@@ -37,26 +39,158 @@ function App() {
   const [highlighted, setHighlighted] = useState<Portfolio[]>([]);
   const [projects, setProjects] = useState<Portfolio[]>([]);
   const [experience, setExperience] = useState<Experience[]>([]);
+  const [activeSection, setActiveSection] = useState<string>("");
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
 
-useEffect(() => {
+  useEffect(() => {
     getHighlighted().then(({ documents }) => setHighlighted(documents as Portfolio[]));
     getPortfolio().then(({ documents }) => setProjects(documents as Portfolio[]));
     getExperience().then(({ documents }) => setExperience(documents));
   }, []);
 
+  // Scroll spy for active section + scroll state
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+
+      const sections = ["work", "about"];
+      let current = "";
+      for (const id of sections) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 150) current = id;
+        }
+      }
+      setActiveSection(current);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Close mobile menu on anchor click
+  const handleNavClick = useCallback(() => {
+    setMobileMenuOpen(false);
+  }, []);
+
   return (
     <main className="relative min-h-screen">
       {/* ─── NAV ─── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-bg/80 border-b border-border/50">
-        <div className="max-w-[1200px] mx-auto px-6 md:px-10 h-14 flex items-center justify-between">
-          <a href="#" className="font-pixel text-[8px] text-accent tracking-wider hover:opacity-80 transition-opacity">
-            DAFFA.DEV
-          </a>
-          <div className="flex items-center gap-6">
-            <a href="#work" className="text-caption text-text-tertiary hover:text-text-primary transition-colors">Work</a>
-            <a href="#about" className="text-caption text-text-tertiary hover:text-text-primary transition-colors hidden sm:block">About</a>
-            <a href="mailto:daftdevs@gmail.com" className="text-caption text-text-tertiary hover:text-text-primary transition-colors">Contact</a>
-            <ThemeButton />
+      <nav
+        ref={navRef}
+        className={`nav-hud fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled
+            ? "nav-hud--scrolled backdrop-blur-xl bg-bg/90 border-b border-border/40"
+            : "bg-transparent"
+        }`}
+      >
+        <div className="max-w-[1200px] mx-auto px-6 md:px-10">
+          <div className="h-16 flex items-center justify-between">
+            {/* ── Left: Player tag ── */}
+            <a href="#" className="group flex items-center gap-3 hover:opacity-90 transition-opacity">
+              <div className="relative flex items-center justify-center w-8 h-8 rounded-lg bg-accent/10 border border-accent/20 group-hover:border-accent/40 transition-colors">
+                <span className="font-pixel text-[6px] text-accent leading-none">D</span>
+                {/* Online pulse */}
+                <span className="absolute -bottom-0.5 -right-0.5 flex h-2.5 w-2.5">
+                  <span className="nav-pulse absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
+                </span>
+              </div>
+              <div className="hidden sm:flex flex-col">
+                <span className="font-mono text-[10px] font-medium text-text-primary tracking-wide uppercase leading-none">
+                  DAFTDEVS
+                </span>
+                <span className="font-mono text-[9px] text-accent/70 tracking-wider leading-none mt-1">
+                  ONLINE
+                </span>
+              </div>
+            </a>
+
+            {/* ── Center: Nav waypoints (desktop) ── */}
+            <div className="hidden md:flex items-center">
+              <div className="flex items-center gap-1 p-1 rounded-full bg-surface/60 border border-border/50 backdrop-blur-sm">
+                {[
+                  { label: "Work", href: "#work", id: "work", key: "W" },
+                  { label: "About", href: "#about", id: "about", key: "A" },
+                  { label: "Contact", href: "mailto:daftdevs@gmail.com", id: "contact", key: "C" },
+                ].map((item) => (
+                  <a
+                    key={item.id}
+                    href={item.href}
+                    onClick={handleNavClick}
+                    className={`nav-waypoint relative flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-medium tracking-wide transition-all duration-300 ${
+                      activeSection === item.id
+                        ? "bg-accent/10 text-accent"
+                        : "text-text-tertiary hover:text-text-primary"
+                    }`}
+                  >
+                    <span className={`font-pixel text-[6px] transition-colors duration-300 ${
+                      activeSection === item.id ? "text-accent" : "text-text-tertiary/50"
+                    }`}>
+                      {item.key}
+                    </span>
+                    <span>{item.label}</span>
+                    {activeSection === item.id && (
+                      <span className="absolute inset-0 rounded-full border border-accent/20 pointer-events-none" />
+                    )}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* ── Right: Command cluster ── */}
+            <div className="flex items-center gap-2">
+              <ThemeButton />
+
+              {/* Mobile menu toggle */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="md:hidden flex items-center justify-center w-9 h-9 rounded-full border border-border text-text-tertiary hover:text-text-primary hover:border-text-tertiary transition-all duration-300"
+                aria-label="Toggle menu"
+              >
+                {mobileMenuOpen ? (
+                  <X className="size-[15px]" />
+                ) : (
+                  <Menu className="size-[15px]" />
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Mobile menu dropdown ── */}
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-400 ease-out ${
+            mobileMenuOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="px-6 pb-5 pt-2 border-t border-border/30">
+            <div className="flex flex-col gap-1">
+              {[
+                { label: "Work", href: "#work", id: "work", key: "01" },
+                { label: "About", href: "#about", id: "about", key: "02" },
+                { label: "Contact", href: "mailto:daftdevs@gmail.com", id: "contact", key: "03" },
+              ].map((item) => (
+                <a
+                  key={item.id}
+                  href={item.href}
+                  onClick={handleNavClick}
+                  className={`flex items-center gap-4 px-3 py-3 rounded-xl transition-all duration-300 ${
+                    activeSection === item.id
+                      ? "bg-accent/5 text-accent"
+                      : "text-text-secondary hover:text-text-primary hover:bg-surface-raised/50"
+                  }`}
+                >
+                  <span className="font-pixel text-[6px] text-text-tertiary/50 w-5">{item.key}</span>
+                  <span className="text-caption font-medium">{item.label}</span>
+                  {activeSection === item.id && (
+                    <span className="ml-auto w-1.5 h-1.5 rounded-full bg-accent" />
+                  )}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </nav>
@@ -266,7 +400,7 @@ useEffect(() => {
       <footer className="border-t border-border px-6 md:px-10">
         <div className="max-w-[1200px] mx-auto py-8 flex items-center justify-between">
           <span className="text-micro text-text-tertiary font-mono uppercase">
-            &copy; {new Date().getFullYear()} daffa.dev
+            &copy; {new Date().getFullYear()} daftdevs
           </span>
           <span className="font-pixel text-[6px] text-text-tertiary tracking-widest opacity-50 hover:opacity-100 hover:text-accent transition-all duration-300 cursor-default select-none">
             GG WP
