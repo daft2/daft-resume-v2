@@ -7,6 +7,8 @@ import {
   Portfolio,
   Experience,
 } from "@/lib/portfolio";
+import { getLenis } from "@/lib/useLenis";
+import { AITerminal, AITerminalTrigger } from "@/components/organisms/ai-terminal";
 
 import { SiGithub, SiGoogleplay, SiAppstore } from "@icons-pack/react-simple-icons";
 import {
@@ -42,6 +44,7 @@ function App() {
   const [activeSection, setActiveSection] = useState<string>("");
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [terminalOpen, setTerminalOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -70,13 +73,39 @@ function App() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on anchor click
-  const handleNavClick = useCallback(() => {
+  // Smooth scroll to anchor using Lenis
+  const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     setMobileMenuOpen(false);
+
+    // Only handle internal anchor links
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        const lenis = getLenis();
+        lenis?.scrollTo(target, { offset: -100, duration: 1.2 });
+      }
+    }
+  }, []);
+
+  // Handle Cmd/Ctrl+K for terminal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setTerminalOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   return (
     <main className="relative min-h-screen">
+      {/* ─── AI TERMINAL ─── */}
+      <AITerminal isOpen={terminalOpen} onClose={() => setTerminalOpen(false)} />
+      <AITerminalTrigger onClick={() => setTerminalOpen(true)} />
+
       {/* ─── NAV ─── */}
       <nav
         ref={navRef}
@@ -116,7 +145,7 @@ function App() {
                 <a
                   key={item.id}
                   href={item.href}
-                  onClick={handleNavClick}
+                  onClick={(e) => handleNavClick(e, item.href)}
                   className={`nav-link relative px-4 py-2 text-[13px] font-medium transition-colors duration-300 ${
                     activeSection === item.id
                       ? "text-text-primary"
@@ -174,7 +203,7 @@ function App() {
                 <a
                   key={item.id}
                   href={item.href}
-                  onClick={handleNavClick}
+                  onClick={(e) => handleNavClick(e, item.href)}
                   className={`group flex items-center justify-between py-4 border-b border-border/40 transition-colors duration-300 ${
                     activeSection === item.id
                       ? "text-text-primary"
