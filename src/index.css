@@ -455,59 +455,61 @@
   }
 
   /* ── AI Terminal ── */
-  .terminal-container {
+  .terminal-window {
     box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.05),
-      0 20px 50px -12px rgba(0, 0, 0, 0.4),
-      0 0 80px -20px var(--accent);
+      0 25px 50px -12px rgba(0, 0, 0, 0.6),
+      0 0 0 1px rgba(255, 255, 255, 0.05);
   }
 
-  [data-theme='dark'] .terminal-container {
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.08),
-      0 20px 50px -12px rgba(0, 0, 0, 0.8),
-      0 0 100px -20px var(--accent);
+  .terminal-titlebar {
+    background: linear-gradient(180deg, #3d3d3d 0%, #2d2d2d 100%);
+    border-bottom: 1px solid #1a1a1a;
   }
 
-  .terminal-messages {
+  .terminal-body {
     scrollbar-width: thin;
-    scrollbar-color: var(--border) transparent;
+    scrollbar-color: #444 transparent;
   }
 
-  .terminal-messages::-webkit-scrollbar {
-    width: 4px;
+  .terminal-body::-webkit-scrollbar {
+    width: 8px;
   }
 
-  .terminal-messages::-webkit-scrollbar-track {
+  .terminal-body::-webkit-scrollbar-track {
     background: transparent;
   }
 
-  .terminal-messages::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 2px;
+  .terminal-body::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+    border: 2px solid #1a1a1a;
   }
 
-  /* Tailwind-style animation utilities */
-  .animate-in {
-    animation: animate-in 0.3s ease-out forwards;
+  .terminal-body::-webkit-scrollbar-thumb:hover {
+    background: #444;
   }
 
-  .fade-in {
-    --tw-enter-opacity: 0;
+  /* Blinking cursor */
+  .terminal-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 16px;
+    background: #28c840;
+    animation: terminal-blink 1s step-end infinite;
   }
 
-  .slide-in-from-bottom-2 {
-    --tw-enter-translate-y: 0.5rem;
+  @keyframes terminal-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
   }
 
-  @keyframes animate-in {
-    from {
-      opacity: var(--tw-enter-opacity, 1);
-      transform: translateY(var(--tw-enter-translate-y, 0));
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  /* Hide scrollbar utility */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 }
