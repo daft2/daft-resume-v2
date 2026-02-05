@@ -18,17 +18,17 @@
   }
 
   [data-theme='dark'] {
-    --bg: #0a0a0b;
-    --surface: #131315;
-    --surface-raised: #1a1a1d;
-    --border: #232326;
-    --border-subtle: #1a1a1d;
-    --text-primary: #ededec;
-    --text-secondary: #9a9a97;
-    --text-tertiary: #5c5c59;
+    --bg: #09090b;
+    --surface: #111113;
+    --surface-raised: #18181b;
+    --border: #27272a;
+    --border-subtle: #1c1c1f;
+    --text-primary: #fafafa;
+    --text-secondary: #a1a1aa;
+    --text-tertiary: #71717a;
     --accent: #34d399;
-    --accent-muted: rgba(52, 211, 153, 0.12);
-    --accent-subtle: rgba(52, 211, 153, 0.06);
+    --accent-muted: rgba(52, 211, 153, 0.15);
+    --accent-subtle: rgba(52, 211, 153, 0.08);
   }
 
   html {
@@ -148,37 +148,41 @@
     width: 100%;
   }
 
-  /* ── Nav HUD ── */
+  /* ── Nav ── */
   .nav-pulse {
-    animation: nav-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+    animation: nav-ping 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
   }
 
   @keyframes nav-ping {
-    0% { transform: scale(1); opacity: 0.75; }
-    75%, 100% { transform: scale(2); opacity: 0; }
+    0% { transform: scale(1); opacity: 0.6; }
+    75%, 100% { transform: scale(2.5); opacity: 0; }
   }
 
-  .nav-waypoint {
+  .nav-link {
     position: relative;
   }
 
-  .nav-waypoint::before {
+  .nav-link::before {
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: 9999px;
-    background: var(--accent);
+    border-radius: 8px;
+    background: var(--text-primary);
     opacity: 0;
-    transform: scale(0.8);
+    transform: scale(0.95);
     transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .nav-waypoint:hover::before {
+  .nav-link:hover::before {
     opacity: 0.04;
     transform: scale(1);
   }
 
-  .nav-waypoint > * {
+  [data-theme='dark'] .nav-link:hover::before {
+    opacity: 0.08;
+  }
+
+  .nav-link > * {
     position: relative;
     z-index: 1;
   }

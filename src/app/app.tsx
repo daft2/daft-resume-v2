@@ -80,114 +80,116 @@ function App() {
       {/* ─── NAV ─── */}
       <nav
         ref={navRef}
-        className={`nav-hud fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-out ${
           scrolled
-            ? "nav-hud--scrolled backdrop-blur-xl bg-bg/90 border-b border-border/40"
+            ? "backdrop-blur-2xl bg-bg/80 [backdrop-filter:saturate(180%)_blur(20px)]"
             : "bg-transparent"
         }`}
       >
-        <div className="max-w-[1200px] mx-auto px-6 md:px-10">
-          <div className="h-16 flex items-center justify-between">
-            {/* ── Left: Player tag ── */}
-            <a href="#" className="group flex items-center gap-3 hover:opacity-90 transition-opacity">
-              <div className="relative flex items-center justify-center w-8 h-8 rounded-lg bg-accent/10 border border-accent/20 group-hover:border-accent/40 transition-colors">
-                <span className="font-pixel text-[6px] text-accent leading-none">D</span>
-                {/* Online pulse */}
-                <span className="absolute -bottom-0.5 -right-0.5 flex h-2.5 w-2.5">
-                  <span className="nav-pulse absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
-                </span>
-              </div>
-              <div className="hidden sm:flex flex-col">
-                <span className="font-mono text-[10px] font-medium text-text-primary tracking-wide uppercase leading-none">
-                  DAFTDEVS
-                </span>
-                <span className="font-mono text-[9px] text-accent/70 tracking-wider leading-none mt-1">
-                  ONLINE
-                </span>
-              </div>
-            </a>
-
-            {/* ── Center: Nav waypoints (desktop) ── */}
-            <div className="hidden md:flex items-center">
-              <div className="flex items-center gap-1 p-1 rounded-full bg-surface/60 border border-border/50 backdrop-blur-sm">
-                {[
-                  { label: "Work", href: "#work", id: "work", key: "W" },
-                  { label: "About", href: "#about", id: "about", key: "A" },
-                  { label: "Contact", href: "mailto:daftdevs@gmail.com", id: "contact", key: "C" },
-                ].map((item) => (
-                  <a
-                    key={item.id}
-                    href={item.href}
-                    onClick={handleNavClick}
-                    className={`nav-waypoint relative flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-medium tracking-wide transition-all duration-300 ${
-                      activeSection === item.id
-                        ? "bg-accent/10 text-accent"
-                        : "text-text-tertiary hover:text-text-primary"
-                    }`}
-                  >
-                    <span className={`font-pixel text-[6px] transition-colors duration-300 ${
-                      activeSection === item.id ? "text-accent" : "text-text-tertiary/50"
-                    }`}>
-                      {item.key}
-                    </span>
-                    <span>{item.label}</span>
-                    {activeSection === item.id && (
-                      <span className="absolute inset-0 rounded-full border border-accent/20 pointer-events-none" />
-                    )}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {/* ── Right: Command cluster ── */}
-            <div className="flex items-center gap-2">
-              <ThemeButton />
-
-              {/* Mobile menu toggle */}
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden flex items-center justify-center w-9 h-9 rounded-full border border-border text-text-tertiary hover:text-text-primary hover:border-text-tertiary transition-all duration-300"
-                aria-label="Toggle menu"
-              >
-                {mobileMenuOpen ? (
-                  <X className="size-[15px]" />
-                ) : (
-                  <Menu className="size-[15px]" />
-                )}
-              </button>
-            </div>
-          </div>
+        {/* Subtle gradient line instead of hard border */}
+        <div className={`absolute bottom-0 left-0 right-0 h-px transition-opacity duration-500 ${
+          scrolled ? "opacity-100" : "opacity-0"
+        }`}>
+          <div className="h-full bg-gradient-to-r from-transparent via-border/60 to-transparent" />
         </div>
 
-        {/* ── Mobile menu dropdown ── */}
-        <div
-          className={`md:hidden overflow-hidden transition-all duration-400 ease-out ${
-            mobileMenuOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
-          }`}
-        >
-          <div className="px-6 pb-5 pt-2 border-t border-border/30">
-            <div className="flex flex-col gap-1">
+        <div className="max-w-[1200px] mx-auto px-6 md:px-10">
+          <div className="h-[72px] flex items-center justify-between">
+            {/* ── Left: Logo/Name ── */}
+            <a href="#" className="group flex items-center gap-2.5">
+              <span className="text-[15px] font-semibold tracking-[-0.02em] text-text-primary">
+                daftdevs
+              </span>
+              <span className="relative flex h-2 w-2">
+                <span className="nav-pulse absolute inline-flex h-full w-full rounded-full bg-accent opacity-60" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
+              </span>
+            </a>
+
+            {/* ── Center: Nav links (desktop) ── */}
+            <div className="hidden md:flex items-center gap-1">
               {[
-                { label: "Work", href: "#work", id: "work", key: "01" },
-                { label: "About", href: "#about", id: "about", key: "02" },
-                { label: "Contact", href: "mailto:daftdevs@gmail.com", id: "contact", key: "03" },
+                { label: "Work", href: "#work", id: "work" },
+                { label: "About", href: "#about", id: "about" },
+                { label: "Contact", href: "mailto:daftdevs@gmail.com", id: "contact" },
               ].map((item) => (
                 <a
                   key={item.id}
                   href={item.href}
                   onClick={handleNavClick}
-                  className={`flex items-center gap-4 px-3 py-3 rounded-xl transition-all duration-300 ${
+                  className={`nav-link relative px-4 py-2 text-[13px] font-medium transition-colors duration-300 ${
                     activeSection === item.id
-                      ? "bg-accent/5 text-accent"
-                      : "text-text-secondary hover:text-text-primary hover:bg-surface-raised/50"
+                      ? "text-text-primary"
+                      : "text-text-secondary hover:text-text-primary"
                   }`}
                 >
-                  <span className="font-pixel text-[6px] text-text-tertiary/50 w-5">{item.key}</span>
-                  <span className="text-caption font-medium">{item.label}</span>
-                  {activeSection === item.id && (
-                    <span className="ml-auto w-1.5 h-1.5 rounded-full bg-accent" />
-                  )}
+                  {item.label}
+                  {/* Active indicator */}
+                  <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-[3px] rounded-full bg-accent transition-all duration-300 ease-out ${
+                    activeSection === item.id ? "w-4 opacity-100" : "w-0 opacity-0"
+                  }`} />
+                </a>
+              ))}
+            </div>
+
+            {/* ── Right: Actions ── */}
+            <div className="flex items-center gap-3">
+              <ThemeButton />
+
+              {/* Mobile menu toggle */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="md:hidden relative flex items-center justify-center w-10 h-10 text-text-secondary hover:text-text-primary transition-colors duration-300"
+                aria-label="Toggle menu"
+              >
+                <div className="relative w-5 h-4 flex flex-col justify-between">
+                  <span className={`block h-[1.5px] bg-current rounded-full transition-all duration-300 origin-center ${
+                    mobileMenuOpen ? "rotate-45 translate-y-[7px]" : ""
+                  }`} />
+                  <span className={`block h-[1.5px] bg-current rounded-full transition-all duration-300 ${
+                    mobileMenuOpen ? "opacity-0 scale-0" : ""
+                  }`} />
+                  <span className={`block h-[1.5px] bg-current rounded-full transition-all duration-300 origin-center ${
+                    mobileMenuOpen ? "-rotate-45 -translate-y-[7px]" : ""
+                  }`} />
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Mobile menu ── */}
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            mobileMenuOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="px-6 pb-8 pt-4">
+            <div className="flex flex-col gap-1">
+              {[
+                { label: "Work", href: "#work", id: "work" },
+                { label: "About", href: "#about", id: "about" },
+                { label: "Contact", href: "mailto:daftdevs@gmail.com", id: "contact" },
+              ].map((item, index) => (
+                <a
+                  key={item.id}
+                  href={item.href}
+                  onClick={handleNavClick}
+                  className={`group flex items-center justify-between py-4 border-b border-border/40 transition-colors duration-300 ${
+                    activeSection === item.id
+                      ? "text-text-primary"
+                      : "text-text-secondary"
+                  }`}
+                  style={{ transitionDelay: mobileMenuOpen ? `${index * 50}ms` : "0ms" }}
+                >
+                  <span className="text-[22px] font-medium tracking-[-0.02em] group-hover:text-text-primary transition-colors">
+                    {item.label}
+                  </span>
+                  <ArrowUpRight className={`size-5 transition-all duration-300 ${
+                    activeSection === item.id
+                      ? "text-accent opacity-100"
+                      : "opacity-0 -translate-x-2 group-hover:opacity-50 group-hover:translate-x-0"
+                  }`} />
                 </a>
               ))}
             </div>
