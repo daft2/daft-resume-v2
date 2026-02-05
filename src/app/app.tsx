@@ -22,6 +22,8 @@ import {
   Headphones,
   Menu,
   X,
+  Zap,
+  FolderCode,
 } from "lucide-react";
 import { Github, Linkedin } from "lucide-react";
 import {
@@ -378,16 +380,28 @@ function App() {
               </div>
             </div>
 
-            {/* Stats tile */}
-            <div className="p-6 rounded-2xl border border-border bg-surface flex flex-col justify-between">
-              <span className="text-micro text-text-tertiary font-mono uppercase">Years exp</span>
-              <span className="text-display font-sans text-text-primary mt-2">4+</span>
+            {/* YOE tile - prominent */}
+            <div className="p-5 rounded-2xl bg-accent/10 border border-accent/20 flex flex-col">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-micro text-accent font-mono uppercase tracking-wider">Level</span>
+                <Zap className="size-4 text-accent" />
+              </div>
+              <span className="text-[2.5rem] font-semibold text-text-primary leading-none tracking-tight">4+</span>
+              <span className="text-caption text-text-secondary mt-1">years exp</span>
+              {/* XP Bar */}
+              <div className="mt-3 h-1.5 bg-accent/20 rounded-full overflow-hidden">
+                <div className="h-full w-[40%] bg-accent rounded-full" />
+              </div>
             </div>
 
             {/* Projects count tile */}
-            <div className="p-6 rounded-2xl border border-border bg-surface flex flex-col justify-between">
-              <span className="text-micro text-text-tertiary font-mono uppercase">Projects</span>
-              <span className="text-display font-sans text-text-primary mt-2">20+</span>
+            <div className="p-5 rounded-2xl border border-border bg-surface flex flex-col">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-micro text-text-tertiary font-mono uppercase tracking-wider">Shipped</span>
+                <FolderCode className="size-4 text-text-tertiary" />
+              </div>
+              <span className="text-[2.5rem] font-semibold text-text-primary leading-none tracking-tight">20+</span>
+              <span className="text-caption text-text-secondary mt-1">projects</span>
             </div>
           </div>
         </div>
