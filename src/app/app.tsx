@@ -383,51 +383,51 @@ function App() {
             </div>
           </div>
 
-          {/* Personality tiles — spans 5 cols, split into sub-grid */}
-          <div className="lg:col-span-5 grid grid-cols-2 gap-3 md:gap-4">
+          {/* Personality tiles — spans 5 cols */}
+          <div className="lg:col-span-5 flex flex-col gap-3 md:gap-4">
+            {/* Stats row - Level & Shipped side by side */}
+            <div className="grid grid-cols-2 gap-3 md:gap-4 reveal">
+              {/* YOE */}
+              <div className="p-4 rounded-2xl border border-border bg-surface relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-0.5 bg-accent" />
+                <div className="flex items-center gap-2 mb-1">
+                  <Zap className="size-3.5 text-accent" />
+                  <span className="text-micro text-accent font-mono uppercase">Level</span>
+                </div>
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-2xl font-semibold text-text-primary leading-none">4+</span>
+                  <span className="text-caption text-text-secondary">years</span>
+                </div>
+              </div>
+              {/* Shipped */}
+              <div className="p-4 rounded-2xl border border-border bg-surface">
+                <div className="flex items-center gap-2 mb-1">
+                  <FolderCode className="size-3.5 text-text-tertiary" />
+                  <span className="text-micro text-text-tertiary font-mono uppercase">Shipped</span>
+                </div>
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-2xl font-semibold text-text-primary leading-none">20+</span>
+                  <span className="text-caption text-text-secondary">projects</span>
+                </div>
+              </div>
+            </div>
+
             {/* Hobbies tile */}
-            <div className="col-span-2 p-4 rounded-2xl border border-border bg-surface reveal">
-              <span className="text-micro text-text-tertiary font-mono uppercase block mb-3">Off-screen</span>
-              <div className="flex flex-wrap gap-2.5">
-                {[
-                  { icon: Gamepad2, label: "Gaming" },
-                  { icon: Coffee, label: "Coffee" },
-                  { icon: Headphones, label: "Music" },
-                ].map(({ icon: Icon, label }) => (
-                  <div key={label} className="flex items-center gap-2 text-caption text-text-secondary">
-                    <div className="w-7 h-7 rounded-lg bg-surface-raised border border-border flex items-center justify-center">
+            <div className="p-4 rounded-2xl border border-border bg-surface reveal">
+              <div className="flex items-center justify-between">
+                <span className="text-micro text-text-tertiary font-mono uppercase">Off-screen</span>
+                <div className="flex items-center gap-2">
+                  {[
+                    { icon: Gamepad2, label: "Gaming" },
+                    { icon: Coffee, label: "Coffee" },
+                    { icon: Headphones, label: "Music" },
+                  ].map(({ icon: Icon, label }) => (
+                    <div key={label} className="w-7 h-7 rounded-lg bg-surface-raised border border-border flex items-center justify-center" title={label}>
                       <Icon className="size-3 text-text-tertiary" />
                     </div>
-                    {label}
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-
-            {/* YOE tile - prominent */}
-            <div className="p-4 rounded-2xl border border-border bg-surface relative overflow-hidden reveal">
-              {/* Accent indicator */}
-              <div className="absolute top-0 left-0 w-full h-1 bg-accent" />
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-micro text-accent font-mono uppercase tracking-wider">Level</span>
-                <Zap className="size-3.5 text-accent" />
-              </div>
-              <span className="text-[2rem] font-semibold text-text-primary leading-none tracking-tight">4+</span>
-              <span className="text-caption text-text-secondary mt-0.5 block">years exp</span>
-              {/* XP Bar */}
-              <div className="mt-2.5 h-1 bg-border rounded-full overflow-hidden">
-                <div className="h-full w-[40%] bg-accent rounded-full" />
-              </div>
-            </div>
-
-            {/* Projects count tile */}
-            <div className="p-4 rounded-2xl border border-border bg-surface flex flex-col reveal">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-micro text-text-tertiary font-mono uppercase tracking-wider">Shipped</span>
-                <FolderCode className="size-3.5 text-text-tertiary" />
-              </div>
-              <span className="text-[2rem] font-semibold text-text-primary leading-none tracking-tight">20+</span>
-              <span className="text-caption text-text-secondary mt-0.5">projects</span>
             </div>
           </div>
         </div>
