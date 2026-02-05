@@ -292,9 +292,9 @@ function App() {
           character sheet
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4">
-          {/* Profile — spans 5 cols */}
-          <div className="lg:col-span-5 p-6 md:p-8 rounded-2xl border border-border bg-surface">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5 md:gap-6">
+          {/* Profile — spans 5 cols (prominent) */}
+          <div className="lg:col-span-5 p-6 md:p-8 rounded-2xl border border-border bg-surface card-prominent">
             <div className="flex items-start gap-5 mb-6">
               <div className="w-14 h-14 rounded-2xl overflow-hidden flex-shrink-0 ring-1 ring-border">
                 <img
