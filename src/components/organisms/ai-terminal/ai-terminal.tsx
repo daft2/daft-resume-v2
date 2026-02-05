@@ -1,11 +1,10 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { Sparkles, Command } from "lucide-react";
+import { Sparkles, CornerDownLeft, User, Bot } from "lucide-react";
 
 interface Message {
   id: string;
   type: "user" | "ai" | "system";
   content: string;
-  timestamp: Date;
 }
 
 interface AITerminalProps {
@@ -14,132 +13,64 @@ interface AITerminalProps {
   onSendMessage?: (message: string) => Promise<string>;
 }
 
-const SUGGESTED_COMMANDS = [
-  "about",
-  "skills",
-  "projects",
-  "contact",
-  "help",
+const SUGGESTIONS = [
+  "What's your tech stack?",
+  "Tell me about yourself",
+  "Are you available for hire?",
 ];
 
-// Simulated AI responses - replace with actual API call
 const getAIResponse = async (input: string): Promise<string> => {
-  await new Promise((r) => setTimeout(r, 600 + Math.random() * 800));
+  await new Promise((r) => setTimeout(r, 500 + Math.random() * 700));
 
   const lower = input.toLowerCase().trim();
 
-  if (lower === "help" || lower === "?") {
-    return `Available commands:
-  about      - Learn about me
-  skills     - View my tech stack
-  projects   - See my featured work
-  contact    - Get in touch
-  clear      - Clear terminal
-
-Or just ask me anything!`;
+  if (lower.includes("stack") || lower.includes("tech") || lower.includes("skill")) {
+    return "I work with TypeScript, React, React Native, Next.js, and Node.js. For databases, I use MySQL, PostgreSQL, and Firebase. I'm also comfortable with cloud platforms like AWS and Vercel.";
   }
-  if (lower === "clear") {
-    return "__CLEAR__";
+  if (lower.includes("about") || lower.includes("who") || lower.includes("yourself")) {
+    return "I'm Daffa, a software engineer from Indonesia with 4+ years of experience building mobile and web apps. I care about clean code, great UX, and solving real problems with elegant solutions.";
   }
-  if (lower.includes("skill") || lower.includes("stack") || lower.includes("tech")) {
-    return `// Tech Stack
-
-Languages    → TypeScript, JavaScript, HTML/CSS
-Frontend     → React, React Native, Next.js, Expo
-Backend      → Node.js, Express, Firebase
-Database     → MySQL, PostgreSQL, MongoDB
-Tools        → Git, Vercel, AWS, Figma`;
+  if (lower.includes("available") || lower.includes("hire") || lower.includes("freelance") || lower.includes("work")) {
+    return "Yes! I'm open to full-time roles and freelance projects. Reach out at daftdevs@gmail.com — I'd love to hear about what you're building.";
   }
-  if (lower === "about" || lower.includes("who") || lower.includes("yourself")) {
-    return `Hey! I'm Daffa — a software engineer based in Indonesia.
-
-I've spent 4+ years building mobile & web apps that people
-actually enjoy using. I care about clean code, smooth UX,
-and solving real problems.
-
-Currently open to new opportunities.`;
+  if (lower.includes("project")) {
+    return "Check out my featured projects above — I've built production apps with thousands of users, focusing on performance and great user experiences.";
   }
-  if (lower === "projects" || lower.includes("project") || lower.includes("work")) {
-    return `// Featured Projects
-
-Check out the "Quest Log" section above for my highlighted
-work. I've built production apps with thousands of users,
-focusing on performance and delightful interactions.
-
-Want details on a specific project? Just ask!`;
-  }
-  if (lower === "contact" || lower.includes("email") || lower.includes("hire") || lower.includes("reach")) {
-    return `// Let's Connect
-
-Email     → daftdevs@gmail.com
-GitHub    → github.com/daft2
-LinkedIn  → linkedin.com/in/muhammad-daffa-s
-
-I'm always open to interesting projects and opportunities.
-Don't hesitate to reach out!`;
+  if (lower.includes("contact") || lower.includes("email") || lower.includes("reach")) {
+    return "You can reach me at daftdevs@gmail.com, or connect on GitHub (@daft2) and LinkedIn. Always happy to chat!";
   }
   if (lower.includes("hello") || lower.includes("hi") || lower === "hey") {
-    return `Hey there! Welcome to my terminal.
-
-Type 'help' to see available commands, or just ask me
-anything about my work, skills, or experience.`;
-  }
-  if (lower.includes("available") || lower.includes("freelance") || lower.includes("job")) {
-    return `Yes! I'm currently open to:
-
-• Full-time positions (remote or Indonesia-based)
-• Freelance/contract work
-• Interesting collaborations
-
-Drop me a line at daftdevs@gmail.com`;
+    return "Hey! 👋 I'm an AI trained on Daffa's portfolio. Ask me about his skills, projects, or availability!";
   }
 
-  return `I'm not sure about that one. Try 'help' to see
-available commands, or ask about my skills, projects,
-or availability!`;
+  return "I can help you learn about Daffa's skills, experience, projects, or availability. What would you like to know?";
 };
 
 export function AITerminal({ isOpen, onClose, onSendMessage }: AITerminalProps) {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "welcome",
-      type: "system",
-      content: `Welcome to daffa.terminal v1.0.0
-Type 'help' for available commands.
-`,
-      timestamp: new Date(),
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
-  const [isThinking, setIsThinking] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [commandHistory, setCommandHistory] = useState<string[]>([]);
-  const [historyIndex, setHistoryIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Handle open/close animations
   useEffect(() => {
     if (isOpen) {
       setIsVisible(true);
-      setTimeout(() => inputRef.current?.focus(), 150);
+      setTimeout(() => inputRef.current?.focus(), 100);
     } else {
       const timer = setTimeout(() => setIsVisible(false), 200);
       return () => clearTimeout(timer);
     }
   }, [isOpen]);
 
-  // Auto-scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Handle keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
-        onClose();
-      }
+      if (e.key === "Escape" && isOpen) onClose();
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
@@ -148,82 +79,29 @@ Type 'help' for available commands.
   const handleSubmit = useCallback(
     async (e?: React.FormEvent) => {
       e?.preventDefault();
-      if (!input.trim() || isThinking) return;
+      if (!input.trim() || isTyping) return;
 
-      const command = input.trim();
-
-      // Add to history
-      setCommandHistory((prev) => [...prev, command]);
-      setHistoryIndex(-1);
-
-      const userMessage: Message = {
-        id: `user-${Date.now()}`,
-        type: "user",
-        content: command,
-        timestamp: new Date(),
-      };
-
-      setMessages((prev) => [...prev, userMessage]);
+      const userMsg: Message = { id: `u-${Date.now()}`, type: "user", content: input.trim() };
+      setMessages((prev) => [...prev, userMsg]);
       setInput("");
-      setIsThinking(true);
+      setIsTyping(true);
 
       try {
-        const response = onSendMessage
-          ? await onSendMessage(command)
-          : await getAIResponse(command);
-
-        if (response === "__CLEAR__") {
-          setMessages([{
-            id: "cleared",
-            type: "system",
-            content: "Terminal cleared.",
-            timestamp: new Date(),
-          }]);
-        } else {
-          const aiMessage: Message = {
-            id: `ai-${Date.now()}`,
-            type: "ai",
-            content: response,
-            timestamp: new Date(),
-          };
-          setMessages((prev) => [...prev, aiMessage]);
-        }
+        const response = onSendMessage ? await onSendMessage(input.trim()) : await getAIResponse(input.trim());
+        setMessages((prev) => [...prev, { id: `a-${Date.now()}`, type: "ai", content: response }]);
       } catch {
-        const errorMessage: Message = {
-          id: `error-${Date.now()}`,
-          type: "system",
-          content: "Error: Command failed. Please try again.",
-          timestamp: new Date(),
-        };
-        setMessages((prev) => [...prev, errorMessage]);
+        setMessages((prev) => [...prev, { id: `e-${Date.now()}`, type: "system", content: "Something went wrong. Try again." }]);
       } finally {
-        setIsThinking(false);
+        setIsTyping(false);
         inputRef.current?.focus();
       }
     },
-    [input, isThinking, onSendMessage]
+    [input, isTyping, onSendMessage]
   );
 
-  // Handle up/down arrow for command history
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "ArrowUp") {
-      e.preventDefault();
-      if (commandHistory.length > 0) {
-        const newIndex = historyIndex < commandHistory.length - 1 ? historyIndex + 1 : historyIndex;
-        setHistoryIndex(newIndex);
-        setInput(commandHistory[commandHistory.length - 1 - newIndex] || "");
-      }
-    } else if (e.key === "ArrowDown") {
-      e.preventDefault();
-      if (historyIndex > 0) {
-        const newIndex = historyIndex - 1;
-        setHistoryIndex(newIndex);
-        setInput(commandHistory[commandHistory.length - 1 - newIndex] || "");
-      } else {
-        setHistoryIndex(-1);
-        setInput("");
-      }
-    }
+  const handleSuggestion = (text: string) => {
+    setInput(text);
+    inputRef.current?.focus();
   };
 
   if (!isVisible) return null;
@@ -232,142 +110,131 @@ Type 'help' for available commands.
     <>
       {/* Backdrop */}
       <div
-        className={`fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm transition-opacity duration-200 ${
-          isOpen ? "opacity-100" : "opacity-0"
+        className={`fixed inset-0 z-[100] transition-all duration-300 ${
+          isOpen ? "bg-black/40 backdrop-blur-sm" : "bg-transparent backdrop-blur-none pointer-events-none"
         }`}
         onClick={onClose}
       />
 
-      {/* Terminal Window */}
+      {/* Terminal */}
       <div
-        className={`fixed z-[101] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-2rem)] max-w-[680px] transition-all duration-200 ease-out ${
-          isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 translate-y-[-48%]"
+        className={`fixed z-[101] inset-x-4 top-[12vh] sm:inset-auto sm:left-1/2 sm:top-[15vh] sm:-translate-x-1/2 sm:w-full sm:max-w-[560px] transition-all duration-300 ease-out ${
+          isOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-[0.98] -translate-y-2"
         }`}
       >
-        <div className="terminal-window rounded-lg overflow-hidden shadow-2xl">
-          {/* Title Bar - macOS style */}
-          <div className="terminal-titlebar h-11 bg-[#2d2d2d] flex items-center px-4 relative select-none">
-            {/* Traffic lights */}
-            <div className="flex items-center gap-2 z-10">
-              <button
-                onClick={onClose}
-                className="group w-3 h-3 rounded-full bg-[#ff5f57] hover:brightness-110 transition-all flex items-center justify-center"
-                aria-label="Close"
-              >
-                <svg className="w-1.5 h-1.5 text-[#990000] opacity-0 group-hover:opacity-100 transition-opacity" fill="currentColor" viewBox="0 0 6 6">
-                  <path d="M.5.5l5 5m0-5l-5 5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" fill="none"/>
-                </svg>
-              </button>
-              <button className="w-3 h-3 rounded-full bg-[#febc2e] hover:brightness-110 transition-all" aria-label="Minimize" />
-              <button className="w-3 h-3 rounded-full bg-[#28c840] hover:brightness-110 transition-all" aria-label="Maximize" />
+        <div className="bg-surface border border-border rounded-2xl shadow-2xl overflow-hidden">
+          {/* Header */}
+          <div className="flex items-center gap-3 px-5 py-4 border-b border-border">
+            <div className="flex items-center justify-center w-8 h-8 rounded-xl bg-accent/10">
+              <Sparkles className="w-4 h-4 text-accent" />
             </div>
-
-            {/* Title */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="flex items-center gap-2 text-[13px] text-[#9b9b9b]">
-                <Sparkles className="w-3.5 h-3.5 text-[#28c840]" />
-                <span className="font-medium">daffa.terminal</span>
-                <span className="text-[#666]">— ai</span>
-              </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-text-primary">Ask AI about Daffa</p>
+              <p className="text-xs text-text-tertiary">Skills, projects, availability</p>
             </div>
+            <kbd className="hidden sm:inline-flex px-2 py-1 text-[10px] font-mono text-text-tertiary bg-surface-raised border border-border rounded-md">
+              ESC
+            </kbd>
           </div>
 
-          {/* Terminal Body */}
-          <div className="terminal-body bg-[#1a1a1a] min-h-[400px] max-h-[60vh] overflow-y-auto p-4 font-mono text-[13px] leading-relaxed">
-            {/* Messages */}
-            {messages.map((message) => (
-              <div key={message.id} className="mb-3">
-                {message.type === "user" ? (
-                  <div className="flex items-start gap-2">
-                    <span className="text-[#28c840] shrink-0">❯</span>
-                    <span className="text-[#e0e0e0]">{message.content}</span>
+          {/* Messages */}
+          <div className="max-h-[45vh] overflow-y-auto">
+            {messages.length === 0 ? (
+              <div className="px-5 py-8">
+                <p className="text-sm text-text-tertiary mb-4">Try asking:</p>
+                <div className="flex flex-wrap gap-2">
+                  {SUGGESTIONS.map((s) => (
+                    <button
+                      key={s}
+                      onClick={() => handleSuggestion(s)}
+                      className="px-3 py-1.5 text-sm text-text-secondary bg-surface-raised border border-border rounded-full hover:border-accent/30 hover:text-text-primary transition-colors"
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="px-5 py-4 space-y-4">
+                {messages.map((msg) => (
+                  <div key={msg.id} className="flex gap-3">
+                    <div
+                      className={`flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center ${
+                        msg.type === "user" ? "bg-text-primary/10" : "bg-accent/10"
+                      }`}
+                    >
+                      {msg.type === "user" ? (
+                        <User className="w-3.5 h-3.5 text-text-secondary" />
+                      ) : (
+                        <Bot className="w-3.5 h-3.5 text-accent" />
+                      )}
+                    </div>
+                    <p className={`text-sm leading-relaxed pt-0.5 ${
+                      msg.type === "user" ? "text-text-primary" : "text-text-secondary"
+                    }`}>
+                      {msg.content}
+                    </p>
                   </div>
-                ) : message.type === "system" ? (
-                  <pre className="text-[#808080] whitespace-pre-wrap">{message.content}</pre>
-                ) : (
-                  <pre className="text-[#c0c0c0] whitespace-pre-wrap pl-4 border-l-2 border-[#333] ml-1">{message.content}</pre>
+                ))}
+
+                {isTyping && (
+                  <div className="flex gap-3">
+                    <div className="flex-shrink-0 w-6 h-6 rounded-lg bg-accent/10 flex items-center justify-center">
+                      <Bot className="w-3.5 h-3.5 text-accent" />
+                    </div>
+                    <div className="flex items-center gap-1 pt-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-text-tertiary animate-bounce [animation-delay:0ms]" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-text-tertiary animate-bounce [animation-delay:150ms]" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-text-tertiary animate-bounce [animation-delay:300ms]" />
+                    </div>
+                  </div>
                 )}
-              </div>
-            ))}
-
-            {/* Thinking indicator */}
-            {isThinking && (
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-[#28c840]">❯</span>
-                <span className="terminal-cursor" />
+                <div ref={messagesEndRef} />
               </div>
             )}
-
-            {/* Input line */}
-            {!isThinking && (
-              <form onSubmit={handleSubmit} className="flex items-center gap-2">
-                <span className="text-[#28c840] shrink-0">❯</span>
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  className="flex-1 bg-transparent text-[#e0e0e0] outline-none caret-[#28c840]"
-                  placeholder=""
-                  autoComplete="off"
-                  spellCheck={false}
-                />
-              </form>
-            )}
-
-            <div ref={messagesEndRef} />
           </div>
 
-          {/* Bottom bar with suggestions */}
-          <div className="bg-[#252525] border-t border-[#333] px-4 py-2.5 flex items-center justify-between">
-            <div className="flex items-center gap-1.5 overflow-x-auto hide-scrollbar">
-              {SUGGESTED_COMMANDS.map((cmd) => (
-                <button
-                  key={cmd}
-                  onClick={() => {
-                    setInput(cmd);
-                    inputRef.current?.focus();
-                  }}
-                  className="px-2.5 py-1 text-[11px] font-mono text-[#808080] bg-[#333] rounded hover:bg-[#404040] hover:text-[#a0a0a0] transition-colors shrink-0"
-                >
-                  {cmd}
-                </button>
-              ))}
+          {/* Input */}
+          <form onSubmit={handleSubmit} className="border-t border-border">
+            <div className="flex items-center gap-3 px-5 py-4">
+              <input
+                ref={inputRef}
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Ask anything..."
+                disabled={isTyping}
+                className="flex-1 bg-transparent text-sm text-text-primary placeholder:text-text-tertiary outline-none disabled:opacity-50"
+              />
+              <button
+                type="submit"
+                disabled={!input.trim() || isTyping}
+                className="flex items-center justify-center w-8 h-8 rounded-lg bg-text-primary text-bg hover:opacity-90 disabled:opacity-30 disabled:cursor-not-allowed transition-opacity"
+              >
+                <CornerDownLeft className="w-4 h-4" />
+              </button>
             </div>
-            <div className="flex items-center gap-1.5 ml-3 shrink-0">
-              <kbd className="hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono text-[#666] bg-[#333] rounded border border-[#444]">
-                <span className="text-[9px]">esc</span>
-              </kbd>
-              <span className="text-[10px] text-[#555]">to close</span>
-            </div>
-          </div>
+          </form>
         </div>
       </div>
     </>
   );
 }
 
-/* ─────────────────────────────────────────────────────
-   Floating trigger button
-   ───────────────────────────────────────────────────── */
 export function AITerminalTrigger({ onClick }: { onClick: () => void }) {
   return (
     <button
       onClick={onClick}
-      className="group fixed bottom-6 right-6 z-50 flex items-center gap-2.5 pl-3 pr-3.5 py-2.5 rounded-xl bg-[#1a1a1a] border border-[#333] shadow-lg hover:shadow-xl hover:border-[#444] hover:bg-[#222] transition-all duration-300 hover:-translate-y-0.5"
+      className="group fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 bg-surface border border-border rounded-2xl shadow-lg hover:shadow-xl hover:border-text-tertiary/30 transition-all duration-300 hover:-translate-y-0.5"
     >
-      <div className="relative flex items-center justify-center w-5 h-5">
-        <span className="absolute w-2 h-2 rounded-full bg-[#28c840] animate-pulse" />
-        <span className="absolute w-2 h-2 rounded-full bg-[#28c840]" />
+      <div className="relative">
+        <Sparkles className="w-4 h-4 text-accent" />
+        <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-accent rounded-full animate-pulse" />
       </div>
-      <span className="text-[13px] font-medium text-[#e0e0e0] font-mono">
-        ~/ask-ai
-      </span>
-      <span className="hidden sm:flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-[#333] border border-[#444] text-[10px] text-[#808080] font-mono">
-        <Command className="w-2.5 h-2.5" />
-        <span>K</span>
-      </span>
+      <span className="text-sm font-medium text-text-primary">Ask AI</span>
+      <kbd className="hidden sm:inline-flex px-1.5 py-0.5 text-[10px] font-mono text-text-tertiary bg-surface-raised border border-border rounded">
+        ⌘K
+      </kbd>
     </button>
   );
 }

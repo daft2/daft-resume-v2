@@ -474,64 +474,6 @@
   }
 
   
-  /* ── AI Terminal ── */
-  .terminal-window {
-    box-shadow:
-      0 25px 50px -12px rgba(0, 0, 0, 0.6),
-      0 0 0 1px rgba(255, 255, 255, 0.05);
-  }
-
-  .terminal-titlebar {
-    background: linear-gradient(180deg, #3d3d3d 0%, #2d2d2d 100%);
-    border-bottom: 1px solid #1a1a1a;
-  }
-
-  .terminal-body {
-    scrollbar-width: thin;
-    scrollbar-color: #444 transparent;
-  }
-
-  .terminal-body::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  .terminal-body::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .terminal-body::-webkit-scrollbar-thumb {
-    background: #333;
-    border-radius: 4px;
-    border: 2px solid #1a1a1a;
-  }
-
-  .terminal-body::-webkit-scrollbar-thumb:hover {
-    background: #444;
-  }
-
-  /* Blinking cursor */
-  .terminal-cursor {
-    display: inline-block;
-    width: 8px;
-    height: 16px;
-    background: #28c840;
-    animation: terminal-blink 1s step-end infinite;
-  }
-
-  @keyframes terminal-blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-
-  /* Hide scrollbar utility */
-  .hide-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  .hide-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
 
   /* ── Scroll Reveal Animations ── */
   .reveal {
